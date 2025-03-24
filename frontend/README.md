@@ -11,7 +11,7 @@ Welcome to **Service Go**, the ultimate platform for connecting users with profe
 ![ServiHomeces Page](./src/assets/HomePage.png)
 ![Services Page](./src/assets/Services.png)
 ![Services Page](./src/assets/Bookings.png)
-![Professional Dashboard](./frontend/assets/pro-dashboard.png)
+![Professional Dashboard](./src/assets/ProfessionalDash.png)
 ![Admin's Dashboard](./src/assets/Admin's%20DashBoard.png)
 
 ### 🔥 Key Features
