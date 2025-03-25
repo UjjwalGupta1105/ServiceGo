@@ -48,7 +48,8 @@ router.post("/register-professional", upload.single("image"),async(req,res)=>{
         // res.cookie("jwt",token,{
         //     expires:new Date(Date.now()+5*24*60*60*1000),
         //     secure:true,
-        //     httpOnly:true
+        //     httpOnly:true,
+                // sameSite: "None",
         // })
         // await professional.save()
         console.log(savedProfessional)
@@ -80,7 +81,8 @@ router.post("/professional/login",async(req,res)=>{
             res.cookie("protoken",token,{
                 expires:new Date(Date.now()+5*24*60*60*1000),
                 secure:true,
-                httpOnly:true
+                httpOnly:true,
+                sameSite: "None",
             })
             res.status(200).json({success:true,professional:professional})
     }

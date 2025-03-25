@@ -37,7 +37,8 @@ router.post("/user/register",async(req,res)=>{
                 expires:new Date(Date.now()+5*24*60*60*1000),
                 secure:true,
                 // secure: false,
-                httpOnly:true
+                httpOnly:true,
+                sameSite: "None",
             })
             console.log(savedUser)
 
@@ -65,7 +66,8 @@ router.post("/user/login",async(req,res)=>{
             res.cookie("jwt",token,{
                 expires:new Date(Date.now()+5*24*60*60*1000),
                 secure:true,
-                httpOnly:true
+                httpOnly:true,
+                sameSite: "None",
             })
             res.status(200).json({success:true,user:user})
     }
