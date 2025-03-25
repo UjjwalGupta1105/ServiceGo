@@ -123,7 +123,11 @@ router.patch("/user/update/:id",auth,async(req,res)=>{
 
     router.delete("/user/logOut",auth,async(req,res,next)=>{
         try {
-            res.clearCookie("jwt")
+            res.clearCookie("jwt",{
+                httpOnly: true,
+                secure: true,
+                sameSite: "None",
+            })
             res.status(201).send({success:true,message:"Successfully Logged Out"})
           } catch(error){
               res.status(400).send({success:true,error:error})

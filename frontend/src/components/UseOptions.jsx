@@ -10,6 +10,7 @@ import {useNavigate} from 'react-router-dom'
 import Backdrop from '@mui/material/Backdrop';
 import axios from "axios"
 import { AppContext } from '../context/AppContext';
+import {toast} from 'react-toastify'
 
 const useOptions=()=>{
 
@@ -45,7 +46,7 @@ const useOptions=()=>{
          await logout()
         //  window.location.reload(true);
         // navigate("/register")
-        alert.success("Logged Out Successfully...")
+        toast.success("Logged Out Successfully...")
     }
     function AdminFunctionalities(){
        navigate("/admin/dashboard")

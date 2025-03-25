@@ -93,7 +93,11 @@ router.post("/professional/login",async(req,res)=>{
 })
  router.delete("/professional/logOut",async(req,res,next)=>{
         try {
-            res.clearCookie("protoken")
+            res.clearCookie("protoken",{
+                httpOnly: true,
+                secure: true,
+                sameSite: "None",
+            })
             res.status(201).send({success:true,message:"Successfully Logged Out"})
           } catch(error){
               res.status(400).send({success:false,message:error.message})
