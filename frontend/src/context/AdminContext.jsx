@@ -10,7 +10,7 @@ export const AdminContextProvider=({children})=>{
     const addProfessional = async(formData) => {
         try {
             console.log(formData);
-            const response= await axios.post("http://localhost:8000/register-professional",formData,{
+            const response= await axios.post(`${import.meta.env.VITE_BACKEND_URL}/register-professional`,formData,{
                 headers: { "Content-Type": "multipart/form-data" },
               })
             
@@ -31,7 +31,7 @@ export const AdminContextProvider=({children})=>{
 
     const allProfessionals=async()=>{
         try{
-            const response=await axios.get("http://localhost:8000/admin/all-professionals")
+            const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/admin/all-professionals`)
             if(response.data.success){
                 return response.data.professionals
             }
@@ -48,7 +48,7 @@ export const AdminContextProvider=({children})=>{
     const updateProfessional=async({id,formData})=>{
         try{
             console.log(formData)
-            const response=await axios.patch(`http://localhost:8000/admin/update-professional/${id}`,formData,{
+            const response=await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/admin/update-professional/${id}`,formData,{
                 headers: { "Content-Type": "multipart/form-data" },
               })
             console.log(response)
@@ -65,7 +65,7 @@ export const AdminContextProvider=({children})=>{
     }
     const updateProfessionalAvailability=async(id)=>{
         try{
-            const response=await axios.patch(`http://localhost:8000/admin/change-availability/${id}`)
+            const response=await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/admin/change-availability/${id}`)
             console.log(response)
             if(response.data.success){
                 return response.data
@@ -83,7 +83,7 @@ export const AdminContextProvider=({children})=>{
     const deleteProfessional=async(id)=>{
         try{
             console.log(id)
-            const response=await axios.delete(`http://localhost:8000/admin/delete-professional/${id}`)
+            const response=await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/admin/delete-professional/${id}`)
             console.log(response)
             if(response.status==200){
                 toast.success("Professional Deleted Sucessfully")
@@ -101,7 +101,7 @@ export const AdminContextProvider=({children})=>{
 
     const findProfessional=async(id)=>{
         try {
-            const response=await axios.get(`http://localhost:8000/admin/get-Professional/${id}`)
+            const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/admin/get-Professional/${id}`)
             if (response){
                 console.log(response.data)
                 return response.data
@@ -117,7 +117,7 @@ export const AdminContextProvider=({children})=>{
 
     const all_bookings=async()=>{
         try{
-            const response=await axios.get("http://localhost:8000/admin/get-appointments")
+            const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/admin/get-appointments`)
             if(response.data.success){
                 return response.data.appointments
             }
@@ -130,7 +130,7 @@ export const AdminContextProvider=({children})=>{
 
     const DashData=async()=>{
         try {
-            const response=await axios.get(`http://localhost:8000/admin/dashData`)
+            const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/admin/dashData`)
             if (response.data.success){
                 console.log(response.data.data)
                 return response.data.data
@@ -144,7 +144,7 @@ export const AdminContextProvider=({children})=>{
 
     const getAllUsers=async()=>{
         try {
-            const response=await axios.get("http://localhost:8000/admin/get-users")
+            const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/admin/get-users`)
             console.log(response.data)
             if(response.data.success){
                 return response.data.users
@@ -158,7 +158,7 @@ export const AdminContextProvider=({children})=>{
     const deleteUser=async(id)=>{
         try{
             console.log(id)
-            const response=await axios.delete(`http://localhost:8000/admin/user/delete/${id}`)
+            const response=await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/admin/user/delete/${id}`)
             console.log(response)
             if(response.data.success){
                 toast.success(response.data.message)
@@ -173,7 +173,7 @@ export const AdminContextProvider=({children})=>{
     const viewUser=async(id)=>{
         try {
             console.log("id is" + id)
-            const response=await axios.get(`http://localhost:8000/admin/get-user/${id}`)
+            const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/admin/get-user/${id}`)
             if (response.data.success){
                 console.log(response.data)
                 return response.data.user
@@ -186,7 +186,7 @@ export const AdminContextProvider=({children})=>{
 
     const updateUser=async({name,additionalInfo,id})=>{
         try {
-            const response=await axios.patch(`http://localhost:8000/user/update/${id}`,{name,additionalInfo},{
+            const response=await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/user/update/${id}`,{name,additionalInfo},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
             console.log(response.data)

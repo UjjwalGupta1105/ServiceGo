@@ -20,7 +20,7 @@ export const AppContextProvider=({children})=>{
 
     const auth=async()=>{
         try {
-            const response=await axios.get("http://localhost:8000/user",{withCredentials:true})
+            const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/user`,{withCredentials:true})
             if(response.data.sucess){
                 setUser(response.data.user)
                 setIsAuthenticated(true)
@@ -46,7 +46,7 @@ export const AppContextProvider=({children})=>{
         try {
             const {name,email,password,city}=user
 
-            const response=await axios.post("http://localhost:8000/user/register",{name,email,password,city},{
+            const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/register`,{name,email,password,city},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
             console.log(response.data)
@@ -66,7 +66,7 @@ export const AppContextProvider=({children})=>{
         try {
             const {email,password}=user
 
-            const response=await axios.post("http://localhost:8000/user/login",{email,password},{
+            const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/login`,{email,password},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
             console.log(response.data)
@@ -86,7 +86,7 @@ export const AppContextProvider=({children})=>{
         try {
             const {email,password}=user
 
-            const response=await axios.post("http://localhost:8000/professional/login",{email,password},{
+            const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/professional/login`,{email,password},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
             console.log(response.data)
@@ -103,7 +103,7 @@ export const AppContextProvider=({children})=>{
     }
     const professionalLogOut=async()=>{
         try {
-              const response=await axios.delete("http://localhost:8000/professional/logOut",{withCredentials:true})
+              const response=await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/professional/logOut`,{withCredentials:true})
               if(response.data.success){
                       setIsAuthenticated(false)
                    toast.success("Logged Out Successfully")
@@ -119,7 +119,7 @@ export const AppContextProvider=({children})=>{
     }
     const userLogOut=async()=>{
         try {
-              const response=await axios.delete("http://localhost:8000/user/logOut",{withCredentials:true})
+              const response=await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/user/logOut`,{withCredentials:true})
               if(response.data.success){
                     setUser({
                         email:"",
@@ -142,7 +142,7 @@ export const AppContextProvider=({children})=>{
 
     const confirmBooking=async ({professionalId,slotDate,slotTime,appointmentData})=>{
         try {
-            const response=await axios.post("http://localhost:8000/user/book-appointment",{professionalId,slotDate,slotTime,appointmentData},{
+            const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/book-appointment`,{professionalId,slotDate,slotTime,appointmentData},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
             console.log(response.data)
@@ -161,7 +161,7 @@ export const AppContextProvider=({children})=>{
    
     const getMyBookings=async()=>{
         try {
-            const response=await axios.get("http://localhost:8000/user/my-appointments",{
+            const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/user/my-appointments`,{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
             console.log(response.data)
@@ -174,7 +174,7 @@ export const AppContextProvider=({children})=>{
 
     const cancelBooking=async(appointmentId)=>{
         try {
-            const response=await axios.patch("http://localhost:8000/user/cancel-booking",{appointmentId},{
+            const response=await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/user/cancel-booking`,{appointmentId},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
             console.log(response.data)
@@ -191,7 +191,7 @@ export const AppContextProvider=({children})=>{
 
     const deleteCancelledBooking=async(appointmentId)=>{
         try {
-            const response=await axios.post("http://localhost:8000/user/cancel-booking/delete",{appointmentId},{
+            const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/cancel-booking/delete`,{appointmentId},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
             console.log(response.data)
@@ -207,7 +207,7 @@ export const AppContextProvider=({children})=>{
     }
     const MarkBookingDone=async(id)=>{
         try {
-            const response=await axios.post(`http://localhost:8000/booking/completed/${id}`)
+            const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/booking/completed/${id}`)
             if (response){
                 console.log(response.data)
                 return response.data
@@ -220,7 +220,7 @@ export const AppContextProvider=({children})=>{
 
     const RazorPay_Payment=async(appointmentId)=>{
         try {
-            const response=await axios.post("http://localhost:8000/user/payment-razorpay",{appointmentId},{
+            const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/payment-razorpay`,{appointmentId},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
             console.log(response.data)
@@ -239,7 +239,7 @@ export const AppContextProvider=({children})=>{
     const RazorPay_Payment_Verification=async(response)=>{
         try {
             
-            const data=await axios.post("http://localhost:8000/user/payment-verification-razorpay",
+            const data=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/payment-verification-razorpay`,
                 {...response}, {headers:{"Content-Type":"application/json"}, withCredentials: true}
             )
             console.log(data.data)
@@ -270,7 +270,7 @@ export const AppContextProvider=({children})=>{
     const uploadReview=async({id,rating,comment})=>{
         console.log(id,rating,comment)
         try {
-            const response=await axios.post(`http://localhost:8000/professional/reviews/${id}`,{rating,comment},{
+            const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}professional/reviews/${id}`,{rating,comment},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
             if(response?.data.success){
@@ -284,7 +284,7 @@ export const AppContextProvider=({children})=>{
 
     const updateUser=async({name,additionalInfo})=>{
         try {
-            const response=await axios.patch("http://localhost:8000/user/update",{name,additionalInfo},{
+            const response=await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/user/update`,{name,additionalInfo},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
             console.log(response.data)
@@ -297,7 +297,7 @@ export const AppContextProvider=({children})=>{
     }
     const updateUserAddress=async(additionalInfo)=>{
         try {
-            const response=await axios.patch("http://localhost:8000/user/address-update",{additionalInfo},{
+            const response=await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/user/address-update`,{additionalInfo},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
             console.log(response.data)
@@ -310,7 +310,7 @@ export const AppContextProvider=({children})=>{
 
     const UpdatePassword=async({currPass,newPass,confirmNewPass})=>{
         try {
-            const response=await axios.post("http://localhost:8000/me/updatePassword",{currPass,newPass,confirmNewPass},{
+            const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/me/updatePassword`,{currPass,newPass,confirmNewPass},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
             console.log(response.data)
@@ -325,7 +325,7 @@ export const AppContextProvider=({children})=>{
     const newReq=async({name,email,message,service,city})=>{
         try {
             console.log({name,email,message,service,city})
-            const response=await axios.post("http://localhost:8000/api/contact",{name,email,message,service,city},{    
+            const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/contact`,{name,email,message,service,city},{    
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
             console.log(response.data)
@@ -338,7 +338,7 @@ export const AppContextProvider=({children})=>{
     }
     const getNewRequests=async()=>{
         try {
-            const response=await axios.get("http://localhost:8000/new-requests")
+            const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/new-requests`)
             console.log(response.data)
             if(response.data.success){
                return response.data.requests
@@ -351,7 +351,7 @@ export const AppContextProvider=({children})=>{
     const deleteRequest=async(id)=>{
         try {
             console.log(id)
-            const response=await axios.delete(`http://localhost:8000/request/delete/${id}`)
+            const response=await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/request/delete/${id}`)
             console.log(response.data)
             if(response.data.success){
                 toast.success(response.data.message)
