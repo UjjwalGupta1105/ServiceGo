@@ -80,9 +80,9 @@ router.post("/professional/login",async(req,res)=>{
         const token=await professional.generateAuthToken()
             res.cookie("protoken",token,{
                 expires:new Date(Date.now()+5*24*60*60*1000),
+                sameSite: "None",
                 secure:true,
                 httpOnly:true,
-                sameSite: "None",
             })
             res.status(200).json({success:true,professional:professional})
     }

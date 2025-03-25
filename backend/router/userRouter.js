@@ -36,9 +36,8 @@ router.post("/user/register",async(req,res)=>{
             res.cookie("jwt",token,{
                 expires:new Date(Date.now()+5*24*60*60*1000),
                 secure:true,
-                // secure: false,
+               sameSite: "None",
                 httpOnly:true,
-                sameSite: "None",
             })
             console.log(savedUser)
 
@@ -65,9 +64,10 @@ router.post("/user/login",async(req,res)=>{
         const token=await user.generateAuthToken()
             res.cookie("jwt",token,{
                 expires:new Date(Date.now()+5*24*60*60*1000),
+                sameSite: "None",
                 secure:true,
                 httpOnly:true,
-                sameSite: "None",
+                
             })
             res.status(200).json({success:true,user:user})
     }
