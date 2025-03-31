@@ -9,14 +9,28 @@ env.config()
 
 connectDataBase()
 connectCloudinary()
+
 app.use(cors({
   origin: process.env.FRONTEND_URL,
   credentials: true,
-  // "changeOrigin": true,
-  // "Access-Control-Allow-Origin": '*'
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  "changeOrigin": true,
+  "Access-Control-Allow-Origin": '*'
 }))
+// CORS Middleware
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", process.env.FRONTEND_URL); // Allow specific origin
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.header("Access-Control-Allow-Credentials", "true");
+
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200); // Preflight request successful
+  }
+
+  next();
+});
+
+
 console.log("Backend is connected")
 console.log(process.env.FRONTEND_URL)
 app.use(express.json())
