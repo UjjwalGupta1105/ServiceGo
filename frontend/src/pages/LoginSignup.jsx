@@ -84,6 +84,7 @@ const LoginSignup=()=>{
 
     return(
         <>
+         {loading && <Loader/>}
         {
             <>
         <div className="login-signup-page">
