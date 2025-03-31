@@ -11,34 +11,17 @@ connectDataBase()
 connectCloudinary()
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "https://servicego-abc.vercel.app",
+  origin: process.env.FRONTEND_URL,
   credentials: true,
-  // "changeOrigin": true,
-  // "Access-Control-Allow-Origin": '*',
-    methods: "GET, POST, PUT, DELETE, OPTIONS",
-  allowedHeaders: "Content-Type, Authorization"
+  "changeOrigin": true,
+  "Access-Control-Allow-Origin": '*',
 }))
-
-// Manually set CORS headers for extra safety
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", process.env.FRONTEND_URL || "https://servicego-abc.vercel.app");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
-  }
-
-  next();
-});
-
-// Explicitly handle preflight requests
-app.options("*", cors());
-
+;
 
 console.log("Backend is connected")
 console.log(process.env.FRONTEND_URL)
+
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
