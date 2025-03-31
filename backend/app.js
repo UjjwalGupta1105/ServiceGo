@@ -12,8 +12,10 @@ connectCloudinary()
 app.use(cors({
   origin: process.env.FRONTEND_URL,
   credentials: true,
-  "changeOrigin": true,
-  "Access-Control-Allow-Origin": '*'
+  // "changeOrigin": true,
+  // "Access-Control-Allow-Origin": '*'
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }))
 console.log("Backend is connected")
 console.log(process.env.FRONTEND_URL)
