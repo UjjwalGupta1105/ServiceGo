@@ -15,6 +15,7 @@ app.use(cors({
   "changeOrigin": true,
   "Access-Control-Allow-Origin": '*'
 }))
+console.log("Backend is connected")
 console.log(process.env.FRONTEND_URL)
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
