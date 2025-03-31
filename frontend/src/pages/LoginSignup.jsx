@@ -7,12 +7,13 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios'; 
 import { AppContext } from '../context/AppContext';
-
+import Loader from "../components/Loading";
 
 const LoginSignup=()=>{
     const navigate=useNavigate()
     const {userRegister,CheckPerson}=useContext(AppContext)
     const {userLogin}=useContext(AppContext)
+     const [loading, setLoading] = useState(false);
 
     const [loginEmail,setLoginEmail]=useState("");
     const [loginPass,setLoginPass]=useState("")
@@ -31,18 +32,22 @@ const LoginSignup=()=>{
 
     const loginSubmit=async(e)=>{
         e.preventDefault()
+        setLoading(true)
         
         const response=await userLogin({
             email:loginEmail,
             password:loginPass,
         })
+        setLoading(false)
        if(response){
            navigate("/")
        }
     }
     const signupSubmit=async(e)=>{
        e.preventDefault()
+       setLoading(true)
        const response=await userRegister(user)
+       setLoading(false)
        if(response){
            navigate("/")
        }
