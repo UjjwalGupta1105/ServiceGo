@@ -87,8 +87,8 @@ const ProfessionalData = () => {
             
 
             setSlots((prev)=>([...prev,timeSlots]))
-            setLoading(false)
         }
+        setLoading(false)
     }
 
     const setBooking=async()=>{
