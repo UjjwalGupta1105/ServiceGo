@@ -45,7 +45,7 @@ const Services=()=>{
 
     return(
       <>
-      {/* {loading && <Loader/>} */}
+       {loading && <Loader/>} 
         <div className="service-page">
             {/* <h1>Services</h1>
             <p>Find expert home services for every need – quick, reliable, and hassle-free!</p> */}

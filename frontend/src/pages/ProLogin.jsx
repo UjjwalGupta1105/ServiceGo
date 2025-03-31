@@ -5,6 +5,7 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios'; 
 import { AppContext } from '../context/AppContext';
+import Loader from "../components/Loading";
 
 
 const ProLogin=()=>{
@@ -13,18 +14,19 @@ const ProLogin=()=>{
 
     const [loginEmail,setLoginEmail]=useState("");
     const [loginPass,setLoginPass]=useState("")
+       const [loading, setLoading] = useState(false);
 
     const loginTab=useRef(null)
 
     const loginSubmit=async(e)=>{
         e.preventDefault()
-        
+        setLoading(true)
        const user={
             email:loginEmail,
             password:loginPass,
         }
-
         const response=await professionalLogin(user)
+        setLoading(false)
        if(response){
            await CheckPerson()
            navigate("/")
@@ -35,6 +37,7 @@ const ProLogin=()=>{
         <>
         {
             <>
+             {loading && <Loader/>}
         <div className="login-signup-page">
 
             <div className="login-signup-container proLogin-container">

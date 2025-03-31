@@ -35,7 +35,6 @@ const ProfessionalData = () => {
         console.log(result)
         setPerson(result);
         console.log(person)
-        setLoading(false)
     }
 
     const getAvailableSlots=()=>{
@@ -88,6 +87,7 @@ const ProfessionalData = () => {
             
 
             setSlots((prev)=>([...prev,timeSlots]))
+            setLoading(false)
         }
     }
 

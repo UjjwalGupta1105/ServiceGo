@@ -11,6 +11,7 @@ import Rating from '@mui/material/Rating';
 import { Button } from '@mui/material'
 import { Bookmark} from 'lucide-react';
 import { toast } from "react-toastify";
+import Loader from "../components/Loading";
 
 const MyAppointments = () => {
   const [appointments, setAppointments] = useState([
@@ -40,6 +41,7 @@ const MyAppointments = () => {
   const {isAuthenticated,getMyBookings,cancelBooking,
     deleteCancelledBooking,RazorPay_Payment,RazorPay_Payment_Verification,uploadReview}=useContext(AppContext)
   const [bookings,setBookings]=useState([])
+      const [loading, setLoading] = useState(true);
 
   const [rating,setRating]=useState(0)
   const [comment,setComment]=useState("")
@@ -113,6 +115,7 @@ const reviewSubmitHandler=async(id)=>{
   
     console.log("isPaid:", isPaid);
     if (isPaid) return;
+    setLoading(true)
 
     const response=await cancelBooking(appointmentId)
     if(response?.success){
@@ -121,6 +124,7 @@ const reviewSubmitHandler=async(id)=>{
   };
 
   const setDelete=async(appointmentId)=>{
+    setLoading(true)
     const response=await deleteCancelledBooking(appointmentId)
     if(response?.success){
       getData()
@@ -139,6 +143,7 @@ const reviewSubmitHandler=async(id)=>{
     const response=await getMyBookings()
     console.log(response)
     setBookings(response.reverse())
+    setLoading(false)
   }
 
   useEffect(()=>{
@@ -146,7 +151,9 @@ const reviewSubmitHandler=async(id)=>{
   },[])
 
   return (
-    <div className="appointments-container">
+    <>
+      {loading && <Loader/>}
+      <div className="appointments-container">
       <h2>My Bookings</h2>
       {bookings.length === 0 && <>
         <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl p-8 text-center my-12 mx-10 py-10 rounded-lg">
@@ -264,6 +271,8 @@ const reviewSubmitHandler=async(id)=>{
         </div>
       ))}
     </div>
+    </>
+    
   );
 };
 
