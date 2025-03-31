@@ -8,6 +8,7 @@ import Stack from '@mui/material/Stack';
 import img from "../assets/logo2.jpg"
 import ReviewCard from "../components/ReviewCard";
 import { toast } from 'react-toastify';
+import Loader from "../components/Loading";
 
 const ProfessionalData = () => {
     const [professionalsList,setProfessionalsList]=useState([])
@@ -17,6 +18,7 @@ const ProfessionalData = () => {
     const navigate=useNavigate()
     const {Professionals,isAuthenticated,confirmBooking,currBooking,setCurrBooking} = useContext(AppContext);
     const {allProfessionals} = useContext(AdminContext);
+    const [loading, setLoading] = useState(true);
 
     const [slots,setSlots]=useState([])
     const [slotIndex,setSlotIndex]=useState(0)
@@ -33,6 +35,7 @@ const ProfessionalData = () => {
         console.log(result)
         setPerson(result);
         console.log(person)
+        setLoading(false)
     }
 
     const getAvailableSlots=()=>{
@@ -93,6 +96,7 @@ const ProfessionalData = () => {
     if(!isAuthenticated){
         toast.error("Login to book Professional")
         navigate("/register")
+        return
     }
 
     if(!slotTime){
@@ -148,7 +152,9 @@ const ProfessionalData = () => {
 
 
     return (
-        <div className="ProfessionalData-page">
+        <>
+            {loading && <Loader/>}
+            <div className="ProfessionalData-page">
           <div className="ProfessionalData-firstSection">
             <div className="professional-img">
                 <img src={person?.image} alt="img" />
@@ -222,6 +228,8 @@ const ProfessionalData = () => {
                 </div>
             </div>
         </div>
+        </>
+        
     );
     }
 

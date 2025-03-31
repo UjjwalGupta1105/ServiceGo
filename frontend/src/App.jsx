@@ -32,6 +32,7 @@ import BookingConfirmation from './pages/BookingConfirmation.jsx'
 import ConfirmedBooking from './pages/ConfirmedBooking.jsx'
 import ProUpdate from "./pages/proDashboard/ProUpdate.jsx"
 import NewRequests from './pages/admin/NewRequests.jsx'
+import Loader from "./components/Loading.jsx"
 
 function App() {
   return (
@@ -113,6 +114,7 @@ function MainApp() {
         <Route path="/booking/confirm" element={<BookingConfirmation/>}/>
         <Route path="/booking-confirmed" element={<ConfirmedBooking/>}/>
         <Route path="/admin/newRequests" element={<NewRequests/>}/>
+        <Route path="/loading" element={<Loader/>}/>
         
 
 

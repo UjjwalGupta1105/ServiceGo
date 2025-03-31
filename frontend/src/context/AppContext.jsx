@@ -257,8 +257,9 @@ export const AppContextProvider=({children})=>{
     const CheckPerson=async()=>{
         const data=await auth()
         if(data?.sucess){
-          console.log(data?.user.role)
-            if(data?.user.role=='professional'){
+            console.log(data)
+          console.log(data?.user?.role)
+            if(data?.user?.role=='professional'){
                 setIsProfessional(true)
             }
         }

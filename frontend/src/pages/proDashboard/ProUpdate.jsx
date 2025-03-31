@@ -6,6 +6,7 @@ import {useContext} from 'react'
 import { toast } from 'react-toastify';
 import { useParams } from "react-router-dom";
 import ProNav from "./ProNav";
+import Loader from "../../components/Loading";
 
 const AddProfessional = () => {
     const {findProfessional,updateProfessional}=useContext(AdminContext)
@@ -25,7 +26,8 @@ const AddProfessional = () => {
     contactNumber:"",
     city:""
   });
-
+   const [loading, setLoading] = useState(false);
+  
   useEffect(()=>{
 
     const find=async()=>{
@@ -44,17 +46,20 @@ const AddProfessional = () => {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
+    setLoading(true)
     console.log(formData);
     window.scrollTo(0, 0)
 
 
     const res=await updateProfessional({id,formData})
-    
+    setLoading(false)
   };
 
   return (
     (
         <>
+    {loading && <Loader/>}
+
             <ProNav/>
         
         <div className="admin-add-professional-page">

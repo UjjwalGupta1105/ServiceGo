@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
 import { AdminContext } from '../../context/AdminContext';
+import Loader from "../../components/Loading";
 
 const MyProfilePage = () => {
   const {viewUser,updateUser}=useContext(AdminContext)
@@ -14,6 +15,7 @@ const MyProfilePage = () => {
   const [userData, setUserData] = useState({})
   const [additionalInfo, setAdditionalInfo] = useState({});
   const [activeTab, setActiveTab] = useState('profile');
+    const [loading, setLoading] = useState(true);
 
   // Get first letter of name for avatar fallback
   const getInitials = (name) => {
@@ -31,8 +33,10 @@ const MyProfilePage = () => {
   };
 
   const saveChanges = async() => {
+    setLoading(true)
     const name=userData.name
     const action=await updateUser({name,additionalInfo,id})
+    setLoading(false)
     if(action.success){
       setActiveTab('profile')
       toast.success("Profile Updated Successfully")
@@ -46,6 +50,7 @@ const MyProfilePage = () => {
       if(res){
         setUserData(res)
         console.log(res)
+        setLoading(false)
       }
     }
 
@@ -66,7 +71,7 @@ const MyProfilePage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
-
+ {loading && <Loader/>}
       {/* Main Content */}
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
 

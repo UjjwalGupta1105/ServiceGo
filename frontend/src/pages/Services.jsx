@@ -3,17 +3,20 @@ import {useState,useEffect,useContext, use} from 'react';
 import {AppContext} from '../context/AppContext';
 import { AdminContext } from "../context/AdminContext";
 import { useParams,useNavigate } from "react-router-dom";
+import Loader from "../components/Loading";
 
 const Services=()=>{
   const { allProfessionals } = useContext(AdminContext);
     const [all_professionals,setALL_Professionals]=useState([])
     const  [professionals,setProfessionals]=useState([])
+    const [loading, setLoading] = useState(true); 
   
     useEffect(()=>{
       const getData=async()=>{
         const response=await allProfessionals()
         setALL_Professionals(response)
       }
+      window.scrollTo(0, 0)
       getData()
     },[])
 
@@ -29,13 +32,20 @@ const Services=()=>{
       else{
         setProfessionals(all_professionals)
       }
+      setLoading(false)
     }
     useEffect(()=>{
       filterProfessionals()
       window.scrollTo(0, 0)
     },[title,all_professionals])
 
+    useEffect(()=>{
+      window.scrollTo(0, 0)
+    },[loading])
+
     return(
+      <>
+      {/* {loading && <Loader/>} */}
         <div className="service-page">
             {/* <h1>Services</h1>
             <p>Find expert home services for every need – quick, reliable, and hassle-free!</p> */}
@@ -84,6 +94,7 @@ const Services=()=>{
                 </div>
             </div>
         </div>
+        </>
     )
 }
 

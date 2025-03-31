@@ -38,12 +38,12 @@ const ConfirmedBooking=()=>{
                             <p className="text-gray-600 max-w-md mx-auto">
                               Your booking with {bookings[0]?.professionalData?.name} on <span className=''>{bookings[0]?.slotDate}</span> at <span>{bookings[0]?.slotTime}</span> has been confirmed. You will receive a confirmation email shortly.
                             </p>
-                            <p className='text-red-700 text-lg'>[ You can do the payment at, My Bookings Page 💰 ]</p>
+                            <p className='text-red-700 text-lg'>[ You can do the payment at, My Bookings Page]</p>
                             <button 
                               className="mt-6 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
                               onClick={() => window.location.href = '/my-bookings'}
                             >
-                              View My Bookings
+                              My Bookings
                             </button>
                           </div>
         </>

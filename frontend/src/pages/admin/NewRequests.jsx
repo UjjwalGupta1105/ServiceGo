@@ -11,24 +11,28 @@ import { Button } from '@mui/material'
 import { Bookmark} from 'lucide-react';
 import img from '../../assets/user-img.jpeg'
 // import DeleteIcon from '@mui/icons-material/Edit';
-
+import Loader from "../../components/Loading";
 import Slidebar from "./Slidebar"
 
 
 const NewRequests = () => {
   const [requests, setRequests] = useState([])
-   const {getNewRequests,deleteRequest}=useContext(AppContext)
+  const {getNewRequests,deleteRequest}=useContext(AppContext)
+  const [loading, setLoading] = useState(true);
 
   const getData=async()=>{
     const response=await getNewRequests()
     console.log(response)
     setRequests(response.reverse())
+    setLoading(false)
   }
 
   const DeleteReq=async(id)=>{
     console.log(id)
+    setLoading(true)
     const response=await deleteRequest(id)
     getData()
+    setLoading(false)
   }
 
   useEffect(()=>{

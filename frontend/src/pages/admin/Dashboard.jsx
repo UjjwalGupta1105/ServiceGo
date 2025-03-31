@@ -4,17 +4,20 @@ import {Link} from 'react-router-dom'
 import { AdminContext } from '../../context/AdminContext'
 import { LineChart, BarChart, PieChart, Pie, Line, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Activity, Users, DollarSign, Calendar, ShoppingBag,IndianRupee, User, Briefcase, Star, FileText, Bell, Menu, X } from 'lucide-react';
+import Loader from "../../components/Loading";
 
 const AdminDashboard = () => {
   const {DashData}=useContext(AdminContext)
   const [dashData,setDashData]=useState()
   const [revenueData,setRevenueData]=useState()
+  const [loading, setLoading] = useState(true);
 
   const getData=async()=>{
     const response=await DashData()
     setDashData(response)
     console.log(dashData)
-    await setRevenueData(generateRevenueData(response.appointments))
+    setRevenueData(generateRevenueData(response.appointments))
+    setLoading(false)
   }
   useEffect(()=>{
     getData()
@@ -148,6 +151,9 @@ const AdminDashboard = () => {
     .slice(0, 5);
 
   return (
+    <>
+      {loading && <Loader/>}
+    
     <div className="flex bg-gray-50">
       {/* Sidebar */}
       <Slidebar/>
@@ -300,6 +306,7 @@ const AdminDashboard = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

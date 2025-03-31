@@ -13,6 +13,7 @@ import {Link} from 'react-router-dom'
 import { AdminContext } from '../../context/AdminContext'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { Calendar, Clock, User, DollarSign,IndianRupee , CheckCircle, XCircle, AlertCircle, TrendingUp } from 'lucide-react';
+import Loader from "../../components/Loading";
 
 const ProDashboard = () => {
   const { all_bookings } = useContext(AdminContext);
@@ -30,6 +31,7 @@ const ProDashboard = () => {
 
   const [timeframe, setTimeframe] = useState('week');
   const [activeSection, setActiveSection] = useState('overview');
+    const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getProfessional = async () => {
@@ -94,6 +96,7 @@ const ProDashboard = () => {
         upcomingBookings: upcoming
       });
     }
+    setLoading(false)
   }, [bookingData]);
 
   // Prepare data for charts
@@ -445,7 +448,9 @@ const ProDashboard = () => {
   };
 
   return (
-        <div className="pro-dashboard-page">
+    <>
+            {loading && <Loader/>}
+            <div className="pro-dashboard-page">
         <ProNav/>
           <div className="admin-bookings-page">
             <Slidebar />
@@ -460,6 +465,7 @@ const ProDashboard = () => {
     </div>
           </div>
         </div>
+    </>
   );
 };
 

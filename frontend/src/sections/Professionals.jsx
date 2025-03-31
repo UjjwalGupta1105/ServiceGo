@@ -4,7 +4,7 @@ import { AppContext } from '../context/AppContext'
 import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'  
 
-const Professionals = () => {
+const Professionals = ({ setLoading }) => {
   const { allProfessionals } = useContext(AdminContext);
   const [professional,setProfessional]=useState([])
 
@@ -12,9 +12,10 @@ const Professionals = () => {
     const getData=async()=>{
       const response=await allProfessionals()
       setProfessional(response)
+      setLoading(false)
     }
     getData()
-  })
+  },[setLoading])
 
   const navigate = useNavigate()
   

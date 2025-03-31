@@ -5,11 +5,13 @@ import {AdminContext} from "../../context/AdminContext";
 import {useContext} from 'react'
 import { toast } from 'react-toastify';
 import { AppContext } from "../../context/AppContext";
+import Loader from "../../components/Loading";
 
 const AddProfessional = () => {
     const {addProfessional}=useContext(AdminContext)
     const {userRegister}=useContext(AppContext)
-    // const [submit,setSubmit]=useState(false)
+   const [loading, setLoading] = useState(false);
+   
 
   const [formData, setFormData] = useState({
     name: "",
@@ -33,6 +35,7 @@ const AddProfessional = () => {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
+    setLoading(true)
     console.log(formData);
     window.scrollTo(0, 0)
 
@@ -61,9 +64,13 @@ const AddProfessional = () => {
             city:""
           })
     }
+    setLoading(false)
   };
 
   return (
+    <>
+        {loading && <Loader/>}
+    
     (
         <div className="admin-add-professional-page">
                <Slidebar/>
@@ -166,6 +173,7 @@ const AddProfessional = () => {
 
         </div>
     )
+    </>
   );
 };
 
