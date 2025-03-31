@@ -19,6 +19,20 @@ app.use(cors({
   allowedHeaders: "Content-Type, Authorization"
 }))
 
+// Manually set CORS headers for extra safety
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", process.env.FRONTEND_URL || "https://servicego-abc.vercel.app");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+
+  next();
+});
+
 // Explicitly handle preflight requests
 app.options("*", cors());
 
@@ -41,6 +55,6 @@ app.get("/",(req,res)=>{
   res.send("Here i Comes....")
 })
 
-app.listen(8000,()=>{
+app.listen(process.env.PORT || 8000,()=>{
 console.log("Started")
 })
