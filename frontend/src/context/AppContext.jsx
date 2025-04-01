@@ -271,7 +271,7 @@ export const AppContextProvider=({children})=>{
     const uploadReview=async({id,rating,comment})=>{
         console.log(id,rating,comment)
         try {
-            const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}professional/reviews/${id}`,{rating,comment},{
+            const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/professional/reviews/${id}`,{rating,comment},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
             if(response?.data?.success){

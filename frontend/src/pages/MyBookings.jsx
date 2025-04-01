@@ -45,6 +45,12 @@ const reviewSubmitHandler=async(id)=>{
       description:"Online Payment for the Booking",
       order_id:order.id,
       receipt:order.receipt,
+      modal: {
+      ondismiss: function () {
+        console.log("Payment popup closed");
+        document.body.style.overflow = "auto"; // Re-enable scrolling if closed
+      },
+    },
       handler:async(response)=>{
         console.log(response)
 
@@ -63,6 +69,7 @@ const reviewSubmitHandler=async(id)=>{
     // Initializing the Razorpay Payemnt
     const paymentInitialization=new window.Razorpay(options)
    //To open payment popUp 
+   document.body.style.overflow = "hidden";
     paymentInitialization.open() 
   }
   const handlePay = async(appointmentId) => {
@@ -95,6 +102,7 @@ const reviewSubmitHandler=async(id)=>{
     setLoading(true)
 
     const response=await cancelBooking(appointmentId)
+    window.scrollTo(0, 0);
     if(response?.success){
       getData()
     }
