@@ -35,44 +35,51 @@ const reviewSubmitHandler=async(id)=>{
 
   const navigate=useNavigate()
 
-  const initPay=async(order)=>{
-
-    const options={
+  const initPay = async (order) => {
+    const options = {
       key: import.meta.env.VITE_RAZORPAY_KEY_ID,
       amount: order.amount,
       currency: "INR",
-      name:"Booking Payment",
-      description:"Online Payment for the Booking",
-      order_id:order.id,
-      receipt:order.receipt,
+      name: "Booking Payment",
+      description: "Online Payment for the Booking",
+      order_id: order.id,
+      receipt: order.receipt,
       modal: {
-      ondismiss: function () {
-        console.log("Payment popup closed");
-        document.body.classList.remove("no-scroll"); // Re-enable scrolling if closed
+        ondismiss: function () {
+          console.log("Payment popup closed");
+          document.body.classList.remove("no-scroll"); 
+        },
       },
-    },
-    
-      handler:async(response)=>{
-        console.log(response)
-        document.body.classList.remove("no-scroll");
+      handler: async (response) => {
+        console.log(response);
+        document.body.classList.remove("no-scroll"); 
         try {
-          const data=await RazorPay_Payment_Verification(response)
-          if(data.success){
-            getData()
-            navigate("/my-bookings")
+          const data = await RazorPay_Payment_Verification(response);
+          if (data.success) {
+            getData();
+            navigate("/my-bookings");
           }
         } catch (error) {
-          console.log(error)
+          console.log(error);
         }
-      }
-    }
-    setLoading(false)
-    // Initializing the Razorpay Payemnt
-    const paymentInitialization=new window.Razorpay(options)
-   //To open payment popUp 
-   document.body.classList.add("no-scroll"); 
-    paymentInitialization.open() 
-  }
+      },
+    };
+  
+    setLoading(false);
+    
+    const paymentInitialization = new window.Razorpay(options);
+  
+    document.body.classList.add("no-scroll");
+  
+    paymentInitialization.on("payment.failed", () => {
+      console.log("Payment failed or cancelled");
+      document.body.classList.remove("no-scroll");
+    });
+  
+    // Open payment popup
+    paymentInitialization.open();
+  };
+  
   const handlePay = async(appointmentId) => {
     window.scrollTo(0, 0);
     setLoading(true)
