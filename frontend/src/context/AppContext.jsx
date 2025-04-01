@@ -274,7 +274,7 @@ export const AppContextProvider=({children})=>{
             const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}professional/reviews/${id}`,{rating,comment},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
-            if(response?.data.success){
+            if(response?.data?.success){
                 toast.success(response.data.message)
             } 
         } catch (error) {
