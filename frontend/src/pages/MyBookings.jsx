@@ -74,10 +74,10 @@ const reviewSubmitHandler=async(id)=>{
     paymentInitialization.open() 
   }
   const handlePay = async(appointmentId) => {
+    window.scrollTo(0, 0);
     setLoading(true)
    const response=await RazorPay_Payment(appointmentId)
    if(response?.success){
-    window.scrollTo(0, 0);
         initPay(response?.order)
    }
   };
