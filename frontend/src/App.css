@@ -13,7 +13,9 @@ padding: 0px; */
 box-sizing: border-box;
 font-family: Outfit;
 }
-
+body.no-scroll {
+  overflow: hidden !important;
+}
 /* Header */
 .header{
   display: flex;

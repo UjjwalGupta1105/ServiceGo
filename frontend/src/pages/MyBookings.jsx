@@ -48,12 +48,13 @@ const reviewSubmitHandler=async(id)=>{
       modal: {
       ondismiss: function () {
         console.log("Payment popup closed");
-        document.body.style.overflow = "auto"; // Re-enable scrolling if closed
+        document.body.classList.remove("no-scroll"); // Re-enable scrolling if closed
       },
     },
+    
       handler:async(response)=>{
         console.log(response)
-
+        document.body.classList.remove("no-scroll");
         try {
           const data=await RazorPay_Payment_Verification(response)
           if(data.success){
@@ -69,7 +70,7 @@ const reviewSubmitHandler=async(id)=>{
     // Initializing the Razorpay Payemnt
     const paymentInitialization=new window.Razorpay(options)
    //To open payment popUp 
-   document.body.style.overflow = "hidden";
+   document.body.classList.add("no-scroll"); 
     paymentInitialization.open() 
   }
   const handlePay = async(appointmentId) => {
