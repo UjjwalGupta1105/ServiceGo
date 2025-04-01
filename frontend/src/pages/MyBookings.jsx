@@ -93,31 +93,66 @@ const reviewSubmitHandler=async(id)=>{
    }
   };
 
-  const handleCancel = async(appointmentId) => {
-    window.scrollTo(0, 0);
-    console.log(appointmentId)
-    let isPaid = bookings.some((appointment) => {
-      if (toString(appointment._id) === toString(appointmentId)) {
-        console.log("Yes");
-        console.log(appointment)
-        console.log(appointment.payment)
-        if(appointment.payment===true) {
-          console.log("Paid");
-          toast.error("You have already paid for this booking. You cannot cancel it.");
-          return true; 
-        }
-      }
-      return false;
-    });
+  // const handleCancel = async(appointmentId) => {
+  //   window.scrollTo(0, 0);
+  //   console.log(appointmentId)
+  //   let isPaid = bookings.some((appointment) => {
+  //     if (toString(appointment._id) === toString(appointmentId)) {
+  //       console.log("Yes");
+  //       console.log(appointment)
+  //       console.log(appointment.payment)
+  //       if(appointment.payment===true) {
+  //         console.log("Paid");
+  //         toast.error("You have already paid for this booking. You cannot cancel it.");
+  //         return true; 
+  //       }
+  //     }
+  //     return false;
+  //   });
   
-    console.log("isPaid:", isPaid);
-    if (!isPaid) {
-        setLoading(true)
+  //   console.log("isPaid:", isPaid);
+  //   if (!isPaid) {
+  //       setLoading(true)
 
-        const response=await cancelBooking(appointmentId)
-        if(response?.success){
-          getData()
+  //       const response=await cancelBooking(appointmentId)
+  //       if(response?.success){
+  //         getData()
+  //       }
+  //   }
+  // };
+  const handleCancel = async (appointmentId) => {
+    window.scrollTo(0, 0);
+    console.log("Attempting to cancel booking:", appointmentId);
+  
+    const appointmentToCancel = bookings.find((appointment) => appointment._id.toString() === appointmentId.toString());
+  
+    if (appointmentToCancel) {
+      console.log("Found appointment:", appointmentToCancel);
+  
+      if (appointmentToCancel.payment === true) {
+        console.log("This booking is paid and cannot be cancelled.");
+        toast.error("You have already paid for this booking. You cannot cancel it.");
+        return; 
+      }
+  
+
+      setLoading(true);
+      try {
+        const response = await cancelBooking(appointmentId);
+        if (response?.success) {
+          console.log("Booking successfully cancelled...", response);
+          await getData(); 
+        } else {
+          setLoading(false);
+          toast.error("Cancellation failed. Please try again.");
         }
+      } catch (error) {
+        setLoading(false);
+        console.error("Error during cancellation:", error);
+        toast.error("Error during cancellation.");
+      }
+    } else {
+      console.error("Appointment not found for cancellation.");
     }
   };
 
