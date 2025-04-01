@@ -57,6 +57,7 @@ const reviewSubmitHandler=async(id)=>{
         console.log(response);
         document.body.classList.remove("no-scroll"); 
         try {
+          setLoading(true)
           const data = await RazorPay_Payment_Verification(response);
           if (data.success) {
             getData();
@@ -93,6 +94,7 @@ const reviewSubmitHandler=async(id)=>{
   };
 
   const handleCancel = async(appointmentId) => {
+    window.scrollTo(0, 0);
     console.log(appointmentId)
     let isPaid = bookings.some((appointment) => {
       if (toString(appointment._id) === toString(appointmentId)) {
@@ -102,20 +104,20 @@ const reviewSubmitHandler=async(id)=>{
         if(appointment.payment===true) {
           console.log("Paid");
           toast.error("You have already paid for this booking. You cannot cancel it.");
-          return true; // Stops iteration early
+          return true; 
         }
       }
-      return false; // Ensures it doesn't return undefined
+      return false;
     });
   
     console.log("isPaid:", isPaid);
-    if (isPaid) return;
-    setLoading(true)
+    if (!isPaid) {
+        setLoading(true)
 
-    const response=await cancelBooking(appointmentId)
-    window.scrollTo(0, 0);
-    if(response?.success){
-      getData()
+        const response=await cancelBooking(appointmentId)
+        if(response?.success){
+          getData()
+        }
     }
   };
 
