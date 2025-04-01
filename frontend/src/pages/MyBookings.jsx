@@ -48,6 +48,7 @@ const reviewSubmitHandler=async(id)=>{
         ondismiss: function () {
           console.log("Payment popup closed");
           document.body.classList.remove("no-scroll"); 
+          document.body.style.overflow="auto"; 
         },
       },
       handler: async (response) => {
