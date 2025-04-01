@@ -28,8 +28,10 @@ const MyAppointments = () => {
 }
 
 const reviewSubmitHandler=async(id)=>{
+  setLoading(true)
  const response=await uploadReview({id,rating,comment})
   setOpen(false)
+  setLoading(false)
 }
 
 
