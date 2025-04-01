@@ -38,7 +38,7 @@ function App() {
   return (
     <AppContextProvider>
       <AdminContextProvider>
-        <BrowserRouter>
+        <BrowserRouter  basename="/">
           <MainApp />
         </BrowserRouter>
       </AdminContextProvider>
