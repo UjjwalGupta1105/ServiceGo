@@ -62,7 +62,7 @@ const reviewSubmitHandler=async(id)=>{
         }
       }
     }
-
+    setLoading(false)
     // Initializing the Razorpay Payemnt
     const paymentInitialization=new window.Razorpay(options)
    //To open payment popUp 
@@ -71,7 +71,6 @@ const reviewSubmitHandler=async(id)=>{
   const handlePay = async(appointmentId) => {
     setLoading(true)
    const response=await RazorPay_Payment(appointmentId)
-   setLoading(false)
    if(response?.success){
     window.scrollTo(0, 0);
         initPay(response?.order)
