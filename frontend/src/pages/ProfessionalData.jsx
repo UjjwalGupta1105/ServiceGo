@@ -88,7 +88,6 @@ const ProfessionalData = () => {
 
             setSlots((prev)=>([...prev,timeSlots]))
         }
-        setLoading(false)
     }
 
     const setBooking=async()=>{
@@ -137,6 +136,7 @@ const ProfessionalData = () => {
             const response=await allProfessionals()
             setProfessionalsList(response)
             console.log(response)
+            setLoading(false)
         }
         window.scrollTo(0,0)
         fetchAllProfessionals();

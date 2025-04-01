@@ -14,32 +14,8 @@ import { toast } from "react-toastify";
 import Loader from "../components/Loading";
 
 const MyAppointments = () => {
-  const [appointments, setAppointments] = useState([
-    {
-      id: 1,
-      name: "Dr. John Doe",
-      service: "Dentist",
-      address: "123 Health Street, New York",
-      date: "12 Feb 2025",
-      time: "10:30 AM",
-      image: "https://source.unsplash.com/100x100/?doctor",
-      paid: false,
-      cancelled: false,
-    },
-    {
-      id: 2,
-      name: "Dr. Sarah Smith",
-      service: "Cardiologist",
-      address: "456 Wellness Ave, California",
-      date: "15 Feb 2025",
-      time: "02:00 PM",
-      image: "https://source.unsplash.com/100x100/?doctor,female",
-      paid: false,
-      cancelled: false,
-    },
-  ]);
   const {isAuthenticated,getMyBookings,cancelBooking,
-    deleteCancelledBooking,RazorPay_Payment,RazorPay_Payment_Verification,uploadReview}=useContext(AppContext)
+     deleteCancelledBooking,RazorPay_Payment,RazorPay_Payment_Verification,uploadReview}=useContext(AppContext)
   const [bookings,setBookings]=useState([])
       const [loading, setLoading] = useState(true);
 
@@ -52,8 +28,11 @@ const MyAppointments = () => {
 }
 
 const reviewSubmitHandler=async(id)=>{
+  setLoading(true)
  const response=await uploadReview({id,rating,comment})
   setOpen(false)
+  setLoading(false)
+
 }
 
 
@@ -90,7 +69,9 @@ const reviewSubmitHandler=async(id)=>{
     paymentInitialization.open() 
   }
   const handlePay = async(appointmentId) => {
+    setLoading(true)
    const response=await RazorPay_Payment(appointmentId)
+   setLoading(false)
    if(response?.success){
     window.scrollTo(0, 0);
         initPay(response?.order)
@@ -142,7 +123,7 @@ const reviewSubmitHandler=async(id)=>{
   const getData=async()=>{
     const response=await getMyBookings()
     console.log(response)
-    setBookings(response.reverse())
+    setBookings(response?.reverse())
     setLoading(false)
   }
 
@@ -155,7 +136,7 @@ const reviewSubmitHandler=async(id)=>{
       {loading && <Loader/>}
       <div className="appointments-container">
       <h2>My Bookings</h2>
-      {bookings.length === 0 && <>
+      {bookings?.length === 0 && <>
         <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl p-8 text-center my-12 mx-10 py-10 rounded-lg">
                     <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
                       <Bookmark size={24} className="text-indigo-600" />

@@ -6,13 +6,14 @@ import { AppContext } from '../context/AppContext';
 import { CheckCircle, Calendar, Clock, MapPin, Phone, User, Mail, Award, DollarSign,IndianRupee , Info } from 'lucide-react';
 import {AdminContext} from "../context/AdminContext"
 import Stepper from "./Stepper(Path)"
+import Loader from "../components/Loading";
 
 const BookingConfirmationPage = () => {
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [professionalData,setProfessionalData]= useState({})
   const [userData,setUserData]= useState({})
-
+ const [loading, setLoading] = useState(true);
 
   const {Professionals,isAuthenticated,confirmBooking,currBooking,setCurrBooking,user,auth} = useContext(AppContext);
   const {findProfessional} = useContext(AdminContext);
@@ -37,11 +38,11 @@ useEffect(() => {
       const storedBooking = sessionStorage.getItem("booking");
 
       if (storedBooking) {
-        setCurrBooking(JSON.parse(storedBooking));  // Convert string to object
+        setCurrBooking(JSON.parse(storedBooking));
         console.log("Retrieved booking from sessionStorage:", JSON.parse(storedBooking));
       }
     }
-  }, [currBooking, setCurrBooking]);  // Run effect when currBooking changes
+  }, [currBooking, setCurrBooking]); 
 
 
 const find=async()=>{
@@ -53,6 +54,7 @@ const find=async()=>{
     if(data.sucess){
         setUserData(data.user)
     }
+    setLoading(false)
 }
 
   useEffect(()=>{
@@ -87,6 +89,7 @@ const find=async()=>{
 
   return (
     <>
+    {loading && <Loader/>}
     <div className="stepper">
         <Stepper activePage={1}/> 
     </div>

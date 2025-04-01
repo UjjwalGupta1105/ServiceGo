@@ -16,17 +16,20 @@ import { DataGrid } from '@mui/x-data-grid'
 import { Avatar, Box } from "@mui/material";
 import CancelIcon from '@mui/icons-material/Cancel';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import Loader from "../../components/Loading";
 
 const Users=()=>{
     const navigate=useNavigate()
     const {getAllUsers}=useContext(AdminContext)
     const {cancelBooking,deleteCancelledBooking}=useContext(AppContext)
     const [users,setUsers]=useState([])
+         const [loading, setLoading] = useState(true);
 
     const getData=async()=>{
         const response=await getAllUsers()
         setUsers(response?.reverse())
         console.log(response)
+        setLoading(false)
     }
 
     useState(()=>{
@@ -87,7 +90,7 @@ const Users=()=>{
 
     return(
         <>
-
+            {loading && <Loader/>}
             <div className="admin-bookings-page">
                 <Slidebar/>
                 <div className="admit-products-list">

@@ -3,6 +3,7 @@ import { Bell, Bookmark, Calendar, Edit, Key, LogOut, Mail, MapPin, Phone, User 
 import { AppContext } from '../context/AppContext';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Loader from "../components/Loading";
 
 const MyProfilePage = () => {
   const {auth,updateUser,UpdatePassword,userLogOut}=useContext(AppContext)
@@ -16,6 +17,7 @@ const MyProfilePage = () => {
 
   const [additionalInfo, setAdditionalInfo] = useState({});
   const [activeTab, setActiveTab] = useState('profile');
+    const [loading, setLoading] = useState(true);
 
   // Get first letter of name for avatar fallback
   const getInitials = (name) => {
@@ -33,15 +35,18 @@ const MyProfilePage = () => {
   };
 
   const saveChanges = async() => {
+    setLoading(true)
     const name=userData.name
     const action=await updateUser({name,additionalInfo})
     if(action.success){
       setActiveTab('profile')
       toast.success("Profile Updated Successfully")
     }
+    setLoading(false)
   }
 
   const updatePassword=async()=>{
+    setLoading(true)
     const res=await UpdatePassword(updatePass)
     if(res.success){
       toast.success("Password Updated Successfully...")
@@ -50,14 +55,17 @@ const MyProfilePage = () => {
         newPass:"",
         confirmNewPass:""
       })
+      setLoading(false)
     }
   }
   const logoutUser=async()=>{
+    setLoading(true)
     const response=await userLogOut()
     if(response){
       navigate("/register")
       toast.success("Logged Out Successfully...")
     }
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -67,6 +75,7 @@ const MyProfilePage = () => {
         console.log(res.user)
         setUserData(res.user)
       }
+      setLoading(false)
     }
 
     find()
@@ -86,7 +95,7 @@ const MyProfilePage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
-
+      {loading && <Loader/>}
       {/* Main Content */}
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
         {/* <div className="mb-6">

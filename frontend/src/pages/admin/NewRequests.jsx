@@ -41,6 +41,7 @@ const NewRequests = () => {
 
   return(
     <>
+     {loading && <Loader/>}
      <div className="admin-bookings-page">
                 <Slidebar/>
                 <div className="admit-products-list">

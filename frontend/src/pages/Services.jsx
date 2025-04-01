@@ -15,6 +15,7 @@ const Services=()=>{
       const getData=async()=>{
         const response=await allProfessionals()
         setALL_Professionals(response)
+        setLoading(false)
       }
       window.scrollTo(0, 0)
       getData()
@@ -32,7 +33,6 @@ const Services=()=>{
       else{
         setProfessionals(all_professionals)
       }
-      setLoading(false)
     }
     useEffect(()=>{
       filterProfessionals()

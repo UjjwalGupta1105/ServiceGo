@@ -7,13 +7,14 @@ import { AdminContext } from "../../context/AdminContext"
 import { useEffect,useContext,useState } from "react"
 import { useParams,useNavigate } from "react-router-dom"
 import { AppContext } from "../../context/AppContext"
-
+import Loader from "../../components/Loading";
 
 const AdminProfessionalPage = () => {
    const {allProfessionals,deleteProfessional,updateProfessionalAvailability}=useContext(AdminContext)
    const [professionals, setProfessionals] = useState([]);
    const [filteredProfessionals, setFilteredProfessionals] = useState([]);
 
+     const [loading, setLoading] = useState(true);
   const {title} = useParams();
   const navigate=useNavigate()  
 //   const {Professionals}=useContext(AppContext)
@@ -37,6 +38,7 @@ useEffect(()=>{
     const fetchProfessionals=async()=>{
                     const response=await allProfessionals()
                     setProfessionals(response.reverse())
+                    setLoading(false)
                 }
                 fetchProfessionals()
                 
@@ -57,7 +59,9 @@ useEffect(()=>{
   };
 
   return (
-    <div className="admin-users-page">
+    <>
+       {loading && <Loader/>}
+       <div className="admin-users-page">
                <Slidebar/>
                <div className="admin-users-right">
                <div className="admin-container">
@@ -137,6 +141,8 @@ useEffect(()=>{
                </div>
 
         </div>
+    </>
+   
   );
 };
 

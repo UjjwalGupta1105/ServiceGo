@@ -26,7 +26,7 @@ const AddProfessional = () => {
     contactNumber:"",
     city:""
   });
-   const [loading, setLoading] = useState(false);
+   const [loading, setLoading] = useState(true);
   
   useEffect(()=>{
 
@@ -34,6 +34,7 @@ const AddProfessional = () => {
         const response=await findProfessional(id)
         console.log(response)
         setFormData(response)
+        setLoading(false)
         console.log("HII")
     }
 

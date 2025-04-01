@@ -10,6 +10,7 @@ import DoneIcon from "@mui/icons-material/Done";
 import ProNav from "./ProNav";
 import { toast } from "react-toastify";
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import Loader from "../../components/Loading";
 
 const Bookings = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const Bookings = () => {
   const { cancelBooking, auth,MarkBookingDone } = useContext(AppContext);
   const [bookings, setBookings] = useState([]);
   const [professional, setProfessional] = useState({});
+  const [loading, setLoading] = useState(true);
   
   // const isMounted = useRef(true); 
 
@@ -38,9 +40,8 @@ const Bookings = () => {
     );
     console.log(ProfessionalsBookings)
 
-    // if (isMounted.current) {
       setBookings(ProfessionalsBookings);
-    // }
+      setLoading(false)
   };
 
   useEffect(() => {
@@ -59,6 +60,7 @@ const Bookings = () => {
       toast.error("Booking already Cancelled")
       return;
     }
+    setLoading(true)
     await cancelBooking(id);
     getData()
   };
@@ -73,6 +75,7 @@ const Bookings = () => {
       toast.error("Service is Cancelled")
       return;
     }
+    setLoading(true)
     const response=await MarkBookingDone(id)
     if(response.success){
       toast.success(response.message)
@@ -140,6 +143,7 @@ const Bookings = () => {
 
   return (
     <div className="pro-dashboard-page">
+    {loading && <Loader/>}
     <ProNav/>
       <div className="admin-bookings-page">
         <Slidebar />

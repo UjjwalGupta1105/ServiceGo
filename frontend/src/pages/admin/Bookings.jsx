@@ -15,17 +15,20 @@ import Button from '@mui/material/Button';
 import { DataGrid } from '@mui/x-data-grid'
 import { Avatar, Box } from "@mui/material";
 import CancelIcon from '@mui/icons-material/Cancel';
+import Loader from "../../components/Loading";
 
 const Bookings=()=>{
     const navigate=useNavigate()
     const {all_bookings}=useContext(AdminContext)
     const {cancelBooking,deleteCancelledBooking}=useContext(AppContext)
     const [bookings,setBookings]=useState([])
+       const [loading, setLoading] = useState(true);
 
     const getData=async()=>{
         const response=await all_bookings()
         setBookings(response.reverse())
         console.log(response)
+        setLoading(false)
     }
 
     useState(()=>{
@@ -42,6 +45,7 @@ const Bookings=()=>{
             toast.error("Booking is already cancelled")
           }
           else{
+            setLoading(true)
             const response=await cancelBooking(id)
             getData()
           }
@@ -116,6 +120,7 @@ const Bookings=()=>{
 
     return(
         <>
+         {loading && <Loader/>}
 
             <div className="admin-bookings-page">
                 <Slidebar/>

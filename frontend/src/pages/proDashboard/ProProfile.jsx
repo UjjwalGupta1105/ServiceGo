@@ -12,7 +12,7 @@ import ProNav from './ProNav'
 import ReviewCard from "../../components/ReviewCard"
 import EditIcon from '@mui/icons-material/Edit';
 import { AdminContext } from '../../context/AdminContext'
-
+import Loader from "../../components/Loading";
 
 const ProProfile = () => {
   const [activeTab, setActiveTab] = useState('about');
@@ -20,6 +20,7 @@ const ProProfile = () => {
   const [professional, setProfessional] = useState({});
   const navigate=useNavigate()
   const {updateProfessionalAvailability}=useContext(AdminContext)
+  const [loading, setLoading] = useState(true);
 
   // Format date
   const formatDate = (dateString) => {
@@ -39,6 +40,7 @@ const ProProfile = () => {
         const response = await auth();
         console.log(response)
           setProfessional(response.user);
+          setLoading(false)
       };
   
       getProfessional();
@@ -46,6 +48,7 @@ const ProProfile = () => {
 
   return (
     <div className="pro-dashboard-page">
+     {loading && <Loader/>}
         <ProNav/>
           <div className="profile-page">
             <Slidebar />

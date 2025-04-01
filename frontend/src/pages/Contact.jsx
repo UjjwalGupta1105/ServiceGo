@@ -2,10 +2,12 @@ import { useContext, useState } from "react";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import { AppContext } from "../context/AppContext";
 import { toast } from "react-toastify";
+import Loader from "../components/Loading";
 
 export default function ContactUs() {
     const [formData, setFormData] = useState({ name: "", email: "", message: "" ,service:"",city:""});
     const {newReq}=useContext(AppContext)
+      const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -13,7 +15,9 @@ export default function ContactUs() {
 
     const handleSubmit = async(e) => {
         e.preventDefault();
+        setLoading(true)
         const res=await newReq(formData)
+        setLoading(false)
         if(res?.success){
           window.scrollTo(0,0)
           setFormData({ name: "", email: "", message: "" ,service:"",city:""})
@@ -23,6 +27,7 @@ export default function ContactUs() {
 
     return (
         <div className="min-h-screen bg-gray-100 p-6">
+        {loading && <Loader/>}
         {/* <div className="about-text"><h2>Contact Us</h2></div> */}
             {/* Professional Banner */}
             <div className="bg-blue-600 mx-20 mt-3 text-white text-center py-10 rounded-lg mb-8">

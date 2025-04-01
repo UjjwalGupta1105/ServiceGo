@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { AdminContext } from '../../context/AdminContext';
 import Slidebar from "./ProSlidebar"
 import ProNav from "./ProNav";
+import Loader from "../../components/Loading";
 
 const MyProfilePage = () => {
   const {viewUser,updateUser}=useContext(AdminContext)
@@ -14,6 +15,7 @@ const MyProfilePage = () => {
   const [userData, setUserData] = useState({})
   const [additionalInfo, setAdditionalInfo] = useState({});
   const [activeTab, setActiveTab] = useState('profile');
+   const [loading, setLoading] = useState(true);
   
 
   const getInitials = (name) => {
@@ -46,6 +48,7 @@ const MyProfilePage = () => {
         setUserData(res)
         console.log(res)
       }
+      setLoading(false)
     }
 
     find()
@@ -65,6 +68,7 @@ const MyProfilePage = () => {
 
   return (
     <div className="pro-dashboard-page">
+     {loading && <Loader/>}
         <ProNav/>
           <div className="admin-bookings-page">
             <Slidebar />
