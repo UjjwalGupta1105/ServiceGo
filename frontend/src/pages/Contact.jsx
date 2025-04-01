@@ -15,11 +15,11 @@ export default function ContactUs() {
 
     const handleSubmit = async(e) => {
         e.preventDefault();
+        window.scrollTo(0,0)
         setLoading(true)
         const res=await newReq(formData)
         setLoading(false)
         if(res?.success){
-          window.scrollTo(0,0)
           setFormData({ name: "", email: "", message: "" ,service:"",city:""})
           toast.success("Message Sent Successfully...")
         }
