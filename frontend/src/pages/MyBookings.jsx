@@ -120,6 +120,7 @@ const reviewSubmitHandler=async(id)=>{
   };
 
   const setDelete=async(appointmentId)=>{
+    window.scrollTo(0, 0);
     setLoading(true)
     const response=await deleteCancelledBooking(appointmentId)
     if(response?.success){
