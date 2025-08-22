@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 export const AppContext = createContext(null);
 
 export const AppContextProvider=({children})=>{
-
+    console.log(import.meta.env.VITE_BACKEND_URL)
     const [user, setUser] = useState({
         email: "",
         password:""
@@ -363,10 +363,41 @@ export const AppContextProvider=({children})=>{
             toast.error(error.response.data.message)
         }
     }
+    const forgotPassword=async(email)=>{
+        try {
+            const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/password/forgot`,{email},{
+                headers:{"Content-Type":"application/json"}, withCredentials: true
+            })
+            console.log(response.data)
+            if(response.data.success){
+                toast.success(response.data.message)
+            }
+            return response.data
+        } catch (error) {
+            console.log(error)
+            toast.error(error?.response?.data?.message)
+        }
+    }
+
+    const resetPassword=async(token,password,confirmPassword)=>{
+        try {
+            const response=await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/password/reset/${token}`,{password,confirmPassword},{
+                headers:{"Content-Type":"application/json"}, withCredentials: true
+            })
+            console.log(response.data)
+            if(response.data.success){
+                toast.success(response.data.message)
+            }
+            return response.data
+        } catch (error) {
+            console.log(error)
+            toast.error(error?.response?.data?.message)
+        }
+    }
 
     return(
-        <AppContext.Provider value={{Services,Professionals,userRegister,userLogin,auth,professionalLogOut,MarkBookingDone,updateUser,newReq,getNewRequests,
-        userLogOut,user,isAuthenticated,confirmBooking,getMyBookings,professionalLogin,uploadReview,currBooking,setCurrBooking,UpdatePassword,deleteRequest,
+        <AppContext.Provider value={{Services,Professionals,userRegister,userLogin,auth,professionalLogOut,MarkBookingDone,updateUser,newReq,getNewRequests,forgotPassword,
+        userLogOut,user,isAuthenticated,confirmBooking,getMyBookings,professionalLogin,uploadReview,currBooking,setCurrBooking,UpdatePassword,deleteRequest,resetPassword,
         cancelBooking,deleteCancelledBooking,RazorPay_Payment,RazorPay_Payment_Verification,CheckPerson,isProfessional,updateUserAddress}}>
             {children}
         </AppContext.Provider>

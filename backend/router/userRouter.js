@@ -15,6 +15,8 @@ const Appointment = require("../models/AppointmentModel")
 const Professional = require("../models/ProfessionalsModel")
 const razorpay=require("razorpay")
 const Requests=require("../models/newRequestsModel")
+const sendEmail=require("../config/sendEmail")
+const crypto = require("crypto");
 
 
 router.post("/user/register",async(req,res)=>{
@@ -70,6 +72,9 @@ router.post("/user/login",async(req,res)=>{
                 
             })
             res.status(200).json({success:true,user:user})
+    }
+    else{
+        return  res.status(400).send({success:false,error:error})
     }
     }
       catch (error) {
@@ -168,7 +173,7 @@ router.patch("/user/update/:id",auth,async(req,res)=>{
             res.status(400).send({success:false,message:error.message})
         }
      })
-
+console.log(process.env.RAZORPAY_KEY_ID, process.env.RAZORPAY_KEY_SECRET);
     const rajorpayInstance=new razorpay({
         key_id:process.env.RAZORPAY_KEY_ID,
         key_secret:process.env.RAZORPAY_KEY_SECRET
@@ -176,7 +181,6 @@ router.patch("/user/update/:id",auth,async(req,res)=>{
     
     router.post("/user/payment-razorpay",auth,async(req,res)=>{
         try {
-            
             const {appointmentId}=req.body
             console.log("checking....")
             console.log(appointmentId)
@@ -192,13 +196,11 @@ router.patch("/user/update/:id",auth,async(req,res)=>{
                 currency:"INR",
                 receipt:appointmentId
             }
-        
             const order=await rajorpayInstance.orders.create(options)
-        
             res.json({success:true,order:order})
     
         } catch (error) {
-            console.log(error)
+            console.log("hi",error)
             res.json({success:false,message:error.message})
         }
     })
@@ -286,6 +288,80 @@ router.patch("/user/update/:id",auth,async(req,res)=>{
           } catch(error){
             res.status(400).send({success:false,message:error.message})
           }
+    })
+
+    router.post("/user/password/forgot",async(req,res)=>{
+        try {
+            console.log("Kii Holo...")
+            const user=await User.findOne({email:req.body.email})
+            if(!user){
+                return res.status(400).send({
+                    success:false,
+                    message:"User Not Found...."
+                })
+            }
+         
+            const resetToken=await user.generatePasswordToken();
+            await user.save({validateBeforeSave:false})
+    
+            const resetPasswordUrl=`${process.env.FRONTEND_URL}/password/reset/${resetToken}`
+            const message=`Update your password through this link -:\n\n ${resetPasswordUrl} \n\n If You haven't Requested For This then Ignore It.... `
+    
+            console.log(message)
+    
+            try {
+                await sendEmail({
+                    email:user.email,
+                    subject:`ServiceGo Password Recovery....`,
+                    message,
+                })
+    
+                res.status(200).send({
+                    success:true,
+                    message:`Your Pasword Update link is sent to ${user.email}.`
+                })
+            } catch (error) {
+                user.resetPasswordToken=undefined
+                user.resetPasswordExpire=undefined
+    
+                await user.save({validateBeforeSave:false})
+            }
+    
+            
+        } catch (error) {
+            res.status(400).send({
+                success:false,
+                message:"Your ResetPassword Request Could Not Be Processed at this moment...."
+            })
+        }
+    })
+    router.patch("/password/reset/:token",async(req,res)=>{
+        try {
+            console.log("camgola")
+            const resettoken=crypto.createHash("sha256").update(req.params.token).digest("hex")
+    
+            const user=await User.findOne({resetPasswordToken:resettoken,resetPasswordExpire:{$gt:Date.now()}})
+            console.log(user)
+    
+            if(req.body.password!=req.body.confirmPassword){
+                res.status(400).send({
+                    success:false,
+                    message:"Confirm Password and Password are NOT Same...."
+                })
+            }
+            user.password=req.body.password
+            user.resetPasswordToken=undefined
+            user.resetPasswordExpire=undefined
+            console.log("Dono")
+            await user.save()
+            res.status(200).json({
+                success:true,
+                message:"Password Updated Successfully...",
+            })
+    
+        } catch (error) {
+            res.status(400).send({sucess:false,message:error.message})
+        }
     })
 
     

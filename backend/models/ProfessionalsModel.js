@@ -2,7 +2,7 @@ const mongoose=require("mongoose")
 const validator=require("validator")
 const bcrypt=require("bcryptjs")
 const jwt=require("jsonwebtoken")
-// const crypto=require("crypto")
+const crypto=require("crypto")
 
 
 const professionalSchema=new mongoose.Schema({
@@ -107,6 +107,8 @@ const professionalSchema=new mongoose.Schema({
             required:true
         }
     }],
+    resetPasswordToken:String,
+    resetPasswordExpire:Date,
 })
 professionalSchema.pre("save",async function(next){
     console.log(`The Password is ${this.password}`)
@@ -134,5 +136,17 @@ professionalSchema.pre("save",async function(next){
         console.log(error)
     }
 }
+professionalSchema.methods.generatePasswordToken= function(){
+    try {
+        const resetToken=crypto.randomBytes(20).toString("hex")
+
+        this.resetPasswordToken=crypto.createHash("sha256").update(resetToken).digest("hex")
+        this.resetPasswordExpire=Date.now()+15*60*1000
+        return resetToken
+
+    } catch (error) {
+        console.log("Error In Generating Reset Password Token....")
+    }
+ }
 const Professional=mongoose.model("Professional",professionalSchema)
 module.exports=Professional;

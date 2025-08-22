@@ -2,6 +2,7 @@ const mongoose=require("mongoose")
 const validator=require("validator")
 const bcrypt=require("bcryptjs")
 const jwt=require("jsonwebtoken")
+const crypto=require("crypto")
 
 const userSchema=new mongoose.Schema({
     name:{
@@ -55,6 +56,8 @@ const userSchema=new mongoose.Schema({
             required:true
         }
     }],
+    resetPasswordToken:String,
+    resetPasswordExpire:Date,
 })
 
 //In Arrow function, this do not points to current object-:
@@ -84,7 +87,18 @@ userSchema.methods.generateAuthToken=async function(req,res,next){
     }
     
 }
-    
+userSchema.methods.generatePasswordToken=async function(){
+    try {
+        const resetToken=crypto.randomBytes(20).toString("hex")
+
+        this.resetPasswordToken=crypto.createHash("sha256").update(resetToken).digest("hex")
+        this.resetPasswordExpire=Date.now()+15*60*1000
+        return resetToken
+
+    } catch (error) {
+        console.log("Error In Generating Reset Password Token....")
+    }
+ }  
 
 
 const User=mongoose.model("User",userSchema)

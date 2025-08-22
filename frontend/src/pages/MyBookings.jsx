@@ -88,9 +88,11 @@ const reviewSubmitHandler=async(id)=>{
     window.scrollTo(0, 0);
     setLoading(true)
    const response=await RazorPay_Payment(appointmentId)
+   console.log(response)
    if(response?.success){
         initPay(response?.order)
    }
+   setLoading(false)
   };
 
   // const handleCancel = async(appointmentId) => {

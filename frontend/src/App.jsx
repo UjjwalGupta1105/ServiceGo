@@ -33,7 +33,8 @@ import ConfirmedBooking from './pages/ConfirmedBooking.jsx'
 import ProUpdate from "./pages/proDashboard/ProUpdate.jsx"
 import NewRequests from './pages/admin/NewRequests.jsx'
 import Loader from "./components/Loading.jsx"
-
+import UpdatePassword from './pages/UpdatePassword.jsx'
+import ResetPassword from "./pages/ResetPassword"
 function App() {
   return (
     <AppContextProvider>
@@ -115,7 +116,8 @@ function MainApp() {
         <Route path="/booking-confirmed" element={<ConfirmedBooking/>}/>
         <Route path="/admin/newRequests" element={<NewRequests/>}/>
         <Route path="/loading" element={<Loader/>}/>
-        
+        <Route path="/password/forgot" element={<UpdatePassword/>}/>
+        <Route path="/password/reset/:token" element={<ResetPassword/>}/>
 
 
      </Routes>
