@@ -36,7 +36,6 @@ const AddProfessional = () => {
   const handleSubmit = async(e) => {
     e.preventDefault();
     setLoading(true)
-    console.log(formData);
     window.scrollTo(0, 0)
 
     if(!formData.image){
@@ -45,7 +44,6 @@ const AddProfessional = () => {
     }
 
     const response= await addProfessional(formData);
-    console.log(response)
     if(response){
         // toast.success("Professional Added Successfully")
        setFormData({

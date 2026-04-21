@@ -62,7 +62,6 @@ const userSchema=new mongoose.Schema({
 
 //In Arrow function, this do not points to current object-:
 userSchema.pre("save",async function(next){
-    console.log(`The Password is ${this.password}`)
     if(this.isModified("password")){
         this.password=await bcrypt.hash(this.password,10);
     }
@@ -72,13 +71,10 @@ userSchema.pre("save",async function(next){
 
 userSchema.methods.generateAuthToken=async function(req,res,next){
     try {
-        console.log(this._id)
         token=jwt.sign({_id:this._id},process.env.secret_key,{
         expiresIn: "5d"
         })
-        console.log(this.tokens)
         this.tokens=this.tokens.concat({token:token})
-        console.log(this.tokens)
         await this.save()
         return token;
         next()

@@ -21,14 +21,12 @@ import Loader from "../../components/Loading";
 const Users=()=>{
     const navigate=useNavigate()
     const {getAllUsers}=useContext(AdminContext)
-    const {cancelBooking,deleteCancelledBooking}=useContext(AppContext)
     const [users,setUsers]=useState([])
          const [loading, setLoading] = useState(true);
 
     const getData=async()=>{
         const response=await getAllUsers()
         setUsers(response?.reverse())
-        console.log(response)
         setLoading(false)
     }
 
@@ -74,7 +72,7 @@ const Users=()=>{
         }
       ];
     
-      const rows = users.map((user, index) => ({
+      const rows = users?.map((user, index) => ({
         id:user._id,
         userId: user._id,
         user: {

@@ -1,5 +1,5 @@
 const razorpay=require("razorpay")
-const Appointment = require("../models/AppointmentModel")
+const Appointment = require("../models/appointments.model")
 
 const rajorpayInstance=new razorpay({
     key_id:process.env.RAZORPAY_KEY_ID,

@@ -5,14 +5,12 @@ import { AdminContext } from "../context/AdminContext";
 
 const AllProfessionals=()=>{
     const {allProfessionals}=useContext(AdminContext);
-    console.log(allProfessionals)
     const [professionals,setProfessionals]=useState([])
 
     useEffect(() => {
       const findProfessionals=async()=>{
         const response=await allProfessionals()
         setProfessionals(response.reverse())
-        console.log(response)
       }
 
 

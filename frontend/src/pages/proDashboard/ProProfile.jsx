@@ -38,7 +38,6 @@ const ProProfile = () => {
   useEffect(() => {
       const getProfessional = async () => {
         const response = await auth();
-        console.log(response)
           setProfessional(response.user);
           setLoading(false)
       };

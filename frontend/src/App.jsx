@@ -1,4 +1,4 @@
-import { useState,useContext, useEffect } from 'react'
+import {useContext } from 'react'
 import './App.css'
 import { BrowserRouter, Route, Routes,useLocation } from 'react-router-dom'
 import Home from './pages/Home'
@@ -49,26 +49,8 @@ function App() {
 
 function MainApp() {
   const location = useLocation();
-  const {CheckPerson,auth,isProfessional}=useContext(AppContext)
-  // const [isProfessional,setIsProfessional]=useState(false)
-  // console.log(location.pathname)
+  const {isProfessional}=useContext(AppContext)
 
-  useEffect(()=>{
-    // const getData=async()=>{
-    //   const data=await auth()
-    //   if(data?.sucess){
-    //     console.log(data?.user.role)
-    //       if(data?.user.role=='professional'){
-    //           setIsProfessional(true)
-    //       }
-    //   }
-    // }
-    const getData=async()=>{
-      const response=await CheckPerson()
-    }
-  
-    getData()
-  },[])
 
   return (
     <>

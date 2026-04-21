@@ -4,11 +4,10 @@ import img from "../../assets/logo2.jpg"
 import { useNavigate } from "react-router-dom"
 
 const ProNav=()=>{
-     const {professionalLogOut,auth,CheckPerson}=useContext(AppContext)
+     const {professionalLogOut,CheckPerson}=useContext(AppContext)
      const navigate=useNavigate()
 
      const handelProLogOut=async()=>{
-        console.log("WantsLogOut....")
         const response=await professionalLogOut()
         if(response){
             await CheckPerson()

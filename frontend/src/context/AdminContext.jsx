@@ -9,12 +9,10 @@ export const AdminContextProvider=({children})=>{
    
     const addProfessional = async(formData) => {
         try {
-            console.log(formData);
             const response= await axios.post(`${import.meta.env.VITE_BACKEND_URL}/register-professional`,formData,{
                 headers: { "Content-Type": "multipart/form-data" },
               })
             
-            console.log(response);
             if(response.data.success){
                 toast.success("Professional Added Successfully")
                 return true
@@ -47,11 +45,9 @@ export const AdminContextProvider=({children})=>{
     }
     const updateProfessional=async({id,formData})=>{
         try{
-            console.log(formData)
             const response=await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/admin/update-professional/${id}`,formData,{
                 headers: { "Content-Type": "multipart/form-data" },
               })
-            console.log(response)
             if(response.data.success){
                 toast.success("User Updated Successfully")
                 return response.data.professionals
@@ -66,7 +62,6 @@ export const AdminContextProvider=({children})=>{
     const updateProfessionalAvailability=async(id)=>{
         try{
             const response=await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/admin/change-availability/${id}`)
-            console.log(response)
             if(response.data.success){
                 return response.data
             }
@@ -82,9 +77,7 @@ export const AdminContextProvider=({children})=>{
     }
     const deleteProfessional=async(id)=>{
         try{
-            console.log(id)
             const response=await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/admin/delete-professional/${id}`)
-            console.log(response)
             if(response.status==200){
                 toast.success("Professional Deleted Sucessfully")
             }
@@ -103,7 +96,6 @@ export const AdminContextProvider=({children})=>{
         try {
             const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/admin/get-Professional/${id}`)
             if (response){
-                console.log(response.data)
                 return response.data
             }
             else{
@@ -132,7 +124,6 @@ export const AdminContextProvider=({children})=>{
         try {
             const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/admin/dashData`)
             if (response.data.success){
-                console.log(response.data.data)
                 return response.data.data
             }
         } catch (error) {
@@ -145,7 +136,6 @@ export const AdminContextProvider=({children})=>{
     const getAllUsers=async()=>{
         try {
             const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/admin/get-users`)
-            console.log(response.data)
             if(response.data.success){
                 return response.data.users
             }
@@ -157,9 +147,7 @@ export const AdminContextProvider=({children})=>{
 
     const deleteUser=async(id)=>{
         try{
-            console.log(id)
             const response=await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/admin/user/delete/${id}`)
-            console.log(response)
             if(response.data.success){
                 toast.success(response.data.message)
             }
@@ -172,10 +160,8 @@ export const AdminContextProvider=({children})=>{
 
     const viewUser=async(id)=>{
         try {
-            console.log("id is" + id)
             const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/admin/get-user/${id}`)
             if (response.data.success){
-                console.log(response.data)
                 return response.data.user
             }
         } catch (error) {
@@ -189,11 +175,9 @@ export const AdminContextProvider=({children})=>{
             const response=await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/user/update/${id}`,{name,additionalInfo},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
-            console.log(response.data)
             return response.data
         } catch (error) {
             console.log(error)
-            console.log(error.response.data.message)
             toast.error(error.response.data.message)
         }
     }

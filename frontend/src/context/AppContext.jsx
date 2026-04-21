@@ -2,14 +2,12 @@ import {createContext} from 'react';
 import { Services } from '../data/Services';
 import { Professionals } from '../data/Professionals';
 import { useState } from 'react';
-import { useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
 export const AppContext = createContext(null);
 
 export const AppContextProvider=({children})=>{
-    console.log(import.meta.env.VITE_BACKEND_URL)
     const [user, setUser] = useState({
         email: "",
         password:""
@@ -32,7 +30,6 @@ export const AppContextProvider=({children})=>{
                   })
                 setIsAuthenticated(false)
             }
-
             return response.data
 
         } catch (error) {
@@ -49,7 +46,6 @@ export const AppContextProvider=({children})=>{
             const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/register`,{name,email,password,city},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
-            console.log(response.data)
             setUser({email:user.email,password:user.password})
             setIsAuthenticated(true)
             toast.success("SignUp Successfull...")
@@ -69,7 +65,6 @@ export const AppContextProvider=({children})=>{
             const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/login`,{email,password},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
-            console.log(response.data)
             setUser({email:user.email,password:user.password})
             setIsAuthenticated(true)
             toast.success("Login Successfull...")
@@ -89,7 +84,6 @@ export const AppContextProvider=({children})=>{
             const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/professional/login`,{email,password},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
-            console.log(response.data)
             setIsAuthenticated(true)
             toast.success("Professional Login Successfull")
             return response.data.success
@@ -145,7 +139,6 @@ export const AppContextProvider=({children})=>{
             const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/book-appointment`,{professionalId,slotDate,slotTime,appointmentData},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
-            console.log(response.data)
             if(response.data.success){
                 toast.success("Professional Booked")
             }
@@ -164,7 +157,6 @@ export const AppContextProvider=({children})=>{
             const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/user/my-appointments`,{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
-            console.log(response.data)
             return response.data.appointments
         } catch (error) {
             console.log(error)
@@ -177,14 +169,12 @@ export const AppContextProvider=({children})=>{
             const response=await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/user/cancel-booking`,{appointmentId},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
-            console.log(response.data)
             if(response.data.success){
                 toast.success(response.data.message)
             }
             return response.data
         } catch (error) {
             console.log(error)
-            console.log(error.response.data.message)
             toast.error(error.response.data.message)
         }
     }
@@ -194,14 +184,12 @@ export const AppContextProvider=({children})=>{
             const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/cancel-booking/delete`,{appointmentId},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
-            console.log(response.data)
             if(response.data.success){
                 toast.success(response.data.message)
             }
             return response.data
         } catch (error) {
             console.log(error)
-            console.log(error.response.data.message)
             toast.error(error.response.data.message)
         }
     }
@@ -223,14 +211,9 @@ export const AppContextProvider=({children})=>{
             const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/payment-razorpay`,{appointmentId},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
-            console.log(response.data)
-            // if(response.data.success){
-            //     toast.success(response.data.message)
-            // }
             return response.data
         } catch (error) {
             console.log(error)
-            console.log(error.response.data.message)
             toast.error(error.response.data.message)
         }
     }
@@ -242,7 +225,6 @@ export const AppContextProvider=({children})=>{
             const data=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/payment-verification-razorpay`,
                 {...response}, {headers:{"Content-Type":"application/json"}, withCredentials: true}
             )
-            console.log(data.data)
             if(data.data.success){
                 toast.success(data.data.message)
             }
@@ -257,8 +239,6 @@ export const AppContextProvider=({children})=>{
     const CheckPerson=async()=>{
         const data=await auth()
         if(data?.sucess){
-            console.log(data)
-          console.log(data?.user?.role)
             if(data?.user?.role=='professional'){
                 setIsProfessional(true)
             }
@@ -269,7 +249,6 @@ export const AppContextProvider=({children})=>{
     }
 
     const uploadReview=async({id,rating,comment})=>{
-        console.log(id,rating,comment)
         try {
             const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/professional/reviews/${id}`,{rating,comment},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
@@ -288,11 +267,9 @@ export const AppContextProvider=({children})=>{
             const response=await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/user/update`,{name,additionalInfo},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
-            console.log(response.data)
             return response.data
         } catch (error) {
             console.log(error)
-            console.log(error.response.data.message)
             toast.error(error.response.data.message)
         }
     }
@@ -301,11 +278,9 @@ export const AppContextProvider=({children})=>{
             const response=await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/user/address-update`,{additionalInfo},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
-            console.log(response.data)
             return response.data
         } catch (error) {
             console.log(error)
-            console.log(error.response.data.message)
         }
     }
 
@@ -314,33 +289,27 @@ export const AppContextProvider=({children})=>{
             const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/me/updatePassword`,{currPass,newPass,confirmNewPass},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
-            console.log(response.data)
             return response.data
         } catch (error) {
             console.log(error)
-            console.log(error.response.data.message)
             toast.error(error.response.data.message)
         }
     }
 
     const newReq=async({name,email,message,service,city})=>{
         try {
-            console.log({name,email,message,service,city})
             const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/contact`,{name,email,message,service,city},{    
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
-            console.log(response.data)
             return response.data
         } catch (error) {
             console.log(error)
-            // console.log(error.response.data)
             toast.error(error?.response?.data)
         }
     }
     const getNewRequests=async()=>{
         try {
             const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/new-requests`)
-            console.log(response.data)
             if(response.data.success){
                return response.data.requests
             }
@@ -351,9 +320,7 @@ export const AppContextProvider=({children})=>{
     }
     const deleteRequest=async(id)=>{
         try {
-            console.log(id)
             const response=await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/request/delete/${id}`)
-            console.log(response.data)
             if(response.data.success){
                 toast.success(response.data.message)
             }
@@ -368,7 +335,6 @@ export const AppContextProvider=({children})=>{
             const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/password/forgot`,{email},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
-            console.log(response.data)
             if(response.data.success){
                 toast.success(response.data.message)
             }
@@ -384,7 +350,6 @@ export const AppContextProvider=({children})=>{
             const response=await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/password/reset/${token}`,{password,confirmPassword},{
                 headers:{"Content-Type":"application/json"}, withCredentials: true
             })
-            console.log(response.data)
             if(response.data.success){
                 toast.success(response.data.message)
             }

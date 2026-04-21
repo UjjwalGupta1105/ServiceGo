@@ -1,13 +1,6 @@
-import React, { useState,useContext,useEffect} from "react";
+import  { useState,useContext,useEffect} from "react";
 import {AppContext} from "../../context/AppContext"
 import DeleteIcon from '@mui/icons-material/Delete';
-import {useNavigate} from "react-router-dom"
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import Rating from '@mui/material/Rating';
-import { Button } from '@mui/material'
 import { Bookmark} from 'lucide-react';
 import img from '../../assets/user-img.jpeg'
 // import DeleteIcon from '@mui/icons-material/Edit';
@@ -22,13 +15,11 @@ const NewRequests = () => {
 
   const getData=async()=>{
     const response=await getNewRequests()
-    console.log(response)
-    setRequests(response.reverse())
+    setRequests(response?.reverse())
     setLoading(false)
   }
 
   const DeleteReq=async(id)=>{
-    console.log(id)
     setLoading(true)
     const response=await deleteRequest(id)
     getData()

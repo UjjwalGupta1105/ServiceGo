@@ -72,7 +72,6 @@ const MyProfilePage = () => {
     const find=async()=>{ 
       const res=await auth()
       if(res.sucess){
-        console.log(res.user)
         setUserData(res.user)
       }
       setLoading(false)

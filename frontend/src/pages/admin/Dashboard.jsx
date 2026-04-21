@@ -15,7 +15,6 @@ const AdminDashboard = () => {
   const getData=async()=>{
     const response=await DashData()
     setDashData(response)
-    console.log(dashData)
     setRevenueData(generateRevenueData(response.appointments))
     setLoading(false)
   }
@@ -126,7 +125,6 @@ const AdminDashboard = () => {
     if (typeof totalRevenue !== 'undefined') {
       revenueData[revenueData.length - 1].revenue = totalRevenue;
     }
-    console.log(revenueData)
     return revenueData;
   }
 

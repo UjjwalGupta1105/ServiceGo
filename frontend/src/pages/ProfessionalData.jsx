@@ -2,10 +2,8 @@ import { useState,useEffect,useContext } from "react";
 import { useNavigate ,useParams } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import { AdminContext } from "../context/AdminContext";
-import * as React from 'react';
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
-import img from "../assets/logo2.jpg"
 import ReviewCard from "../components/ReviewCard";
 import { toast } from 'react-toastify';
 import Loader from "../components/Loading";
@@ -14,9 +12,8 @@ const ProfessionalData = () => {
     const [professionalsList,setProfessionalsList]=useState([])
     const [person,setPerson]=useState();
     const {_id}=useParams();
-    console.log(_id)
     const navigate=useNavigate()
-    const {Professionals,isAuthenticated,confirmBooking,currBooking,setCurrBooking} = useContext(AppContext);
+    const {isAuthenticated,currBooking,setCurrBooking} = useContext(AppContext);
     const {allProfessionals} = useContext(AdminContext);
     const [loading, setLoading] = useState(true);
 
@@ -26,15 +23,11 @@ const ProfessionalData = () => {
     const daysOfWeek=["MON","TUE","WED","THU","FRI","SAT","SUN"];
 
     const getData = async() => {
-        console.log(professionalsList)
         const data=professionalsList.filter((item)=>{
             return item._id===_id
         })
-        console.log(data)
         const result=data[0]
-        console.log(result)
         setPerson(result);
-        console.log(person)
     }
 
     const getAvailableSlots=()=>{
@@ -113,11 +106,9 @@ const ProfessionalData = () => {
 
         const slotDate=day + "-" +month +"-" + year
         let professionalId=_id
-        console.log(professionalId,slotDate,slotTime)
 
         // const response=await confirmBooking({professionalId,slotDate,slotTime})
         // localStorage.setItem("booking", JSON.stringify({professionalId,slotDate,slotTime}));
-        console.log(currBooking)
         await setCurrBooking({...currBooking,bookingObject:{professionalId,slotDate,slotTime}})
         // console.log(response)
         // if(response.success){
@@ -135,7 +126,6 @@ const ProfessionalData = () => {
         const fetchAllProfessionals=async()=>{
             const response=await allProfessionals()
             setProfessionalsList(response)
-            console.log(response)
             setLoading(false)
         }
         window.scrollTo(0,0)

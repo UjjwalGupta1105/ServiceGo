@@ -28,7 +28,6 @@ const Services=()=>{
       if(title && title!=='all-services'){
         const filteredProfessionals=all_professionals.filter((professional)=>professional.service===title)
         setProfessionals(filteredProfessionals)
-        console.log(filteredProfessionals)
       }
       else{
         setProfessionals(all_professionals)

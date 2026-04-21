@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 import Loader from "../components/Loading";
 
 const MyAppointments = () => {
-  const {isAuthenticated,getMyBookings,cancelBooking,
+  const {getMyBookings,cancelBooking,
      deleteCancelledBooking,RazorPay_Payment,RazorPay_Payment_Verification,uploadReview}=useContext(AppContext)
   const [bookings,setBookings]=useState([])
       const [loading, setLoading] = useState(true);
@@ -48,13 +48,11 @@ const reviewSubmitHandler=async(id)=>{
       receipt: order.receipt,
       modal: {
         ondismiss: function () {
-          console.log("Payment popup closed");
           document.body.classList.remove("no-scroll"); 
           document.body.style.overflow="auto"; 
         },
       },
       handler: async (response) => {
-        console.log(response);
         document.body.classList.remove("no-scroll"); 
         try {
           setLoading(true)
@@ -76,7 +74,6 @@ const reviewSubmitHandler=async(id)=>{
     document.body.classList.add("no-scroll");
   
     paymentInitialization.on("payment.failed", () => {
-      console.log("Payment failed or cancelled");
       document.body.classList.remove("no-scroll");
     });
   
@@ -88,7 +85,6 @@ const reviewSubmitHandler=async(id)=>{
     window.scrollTo(0, 0);
     setLoading(true)
    const response=await RazorPay_Payment(appointmentId)
-   console.log(response)
    if(response?.success){
         initPay(response?.order)
    }
@@ -124,15 +120,12 @@ const reviewSubmitHandler=async(id)=>{
   // };
   const handleCancel = async (appointmentId) => {
     window.scrollTo(0, 0);
-    console.log("Attempting to cancel booking:", appointmentId);
   
     const appointmentToCancel = bookings.find((appointment) => appointment._id.toString() === appointmentId.toString());
   
     if (appointmentToCancel) {
-      console.log("Found appointment:", appointmentToCancel);
   
       if (appointmentToCancel.payment === true) {
-        console.log("This booking is paid and cannot be cancelled.");
         toast.error("You have already paid for this booking. You cannot cancel it.");
         return; 
       }
@@ -142,7 +135,6 @@ const reviewSubmitHandler=async(id)=>{
       try {
         const response = await cancelBooking(appointmentId);
         if (response?.success) {
-          console.log("Booking successfully cancelled...", response);
           await getData(); 
         } else {
           setLoading(false);
@@ -177,7 +169,6 @@ const reviewSubmitHandler=async(id)=>{
 
   const getData=async()=>{
     const response=await getMyBookings()
-    console.log(response)
     setBookings(response?.reverse())
     setLoading(false)
   }

@@ -19,7 +19,6 @@ app.use(cors({
 ;
 
 console.log("Backend is connected")
-console.log(process.env.FRONTEND_URL)
 
 
 app.use(express.json())
@@ -27,15 +26,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
 
 // Routes
-const professional_routes=require("./router/professionalRouter")
+const professional_routes=require("./routes/professionals.routes")
 app.use(professional_routes)
-const user_router=require("./router/userRouter")
+const user_router=require("./routes/users.routes")
 app.use(user_router)
-const appointment_router=require("./router/appointmentRouter")
+const appointment_router=require("./routes/appointments.routes")
 app.use(appointment_router)
 
 app.get("/",(req,res)=>{
-  res.send("Here i Comes....")
+  res.send("Server Started")
 })
 
 app.listen(process.env.PORT || 8000,()=>{

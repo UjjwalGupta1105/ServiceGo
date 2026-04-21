@@ -1,7 +1,5 @@
-import React, { useState,useContext, useEffect } from 'react';
-import { Bell, Bookmark, Calendar, Edit, Key, LogOut, Mail, MapPin, Phone, User } from 'lucide-react';
-import { AppContext } from '../../context/AppContext';
-import { useNavigate } from 'react-router-dom';
+import  { useState,useContext, useEffect } from 'react';
+import {  Calendar, Edit, Mail, MapPin, Phone, User } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
 import { AdminContext } from '../../context/AdminContext';
@@ -9,15 +7,12 @@ import Loader from "../../components/Loading";
 
 const MyProfilePage = () => {
   const {viewUser,updateUser}=useContext(AdminContext)
-  const navigate=useNavigate()
   const {id}=useParams()
-  console.log(id)
   const [userData, setUserData] = useState({})
   const [additionalInfo, setAdditionalInfo] = useState({});
   const [activeTab, setActiveTab] = useState('profile');
-    const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
-  // Get first letter of name for avatar fallback
   const getInitials = (name) => {
     return name ? name.charAt(0).toUpperCase() : 'U';
   };
@@ -49,7 +44,6 @@ const MyProfilePage = () => {
       const res=await viewUser(id)
       if(res){
         setUserData(res)
-        console.log(res)
         setLoading(false)
       }
     }

@@ -11,7 +11,6 @@ import Loader from "../../components/Loading";
 const MyProfilePage = () => {
   const {viewUser,updateUser}=useContext(AdminContext)
   const {id}=useParams()
-  console.log(id)
   const [userData, setUserData] = useState({})
   const [additionalInfo, setAdditionalInfo] = useState({});
   const [activeTab, setActiveTab] = useState('profile');
@@ -46,7 +45,6 @@ const MyProfilePage = () => {
       const res=await viewUser(id)
       if(res){
         setUserData(res)
-        console.log(res)
       }
       setLoading(false)
     }

@@ -29,9 +29,7 @@ const AddProfessional = () => {
 
     const find=async()=>{
         const response=await findProfessional(id)
-        console.log(response)
         setFormData(response)
-        console.log("HII")
     }
 
     find()
@@ -43,7 +41,6 @@ const AddProfessional = () => {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log(formData);
     window.scrollTo(0, 0)
 
 

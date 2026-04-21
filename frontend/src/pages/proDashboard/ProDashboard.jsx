@@ -36,7 +36,6 @@ const ProDashboard = () => {
   useEffect(() => {
     const getProfessional = async () => {
       const response = await auth();
-      console.log(response)
         setProfessional(response.user);
     };
 
@@ -45,15 +44,10 @@ const ProDashboard = () => {
 
   const getData = async () => {
     const response = await all_bookings();
-    console.log(response.reverse())
     const ProfessionalsBookings = response.filter(
       (booking) => booking.professionalId === professional._id
     );
-    console.log(ProfessionalsBookings)
-
-    // if (isMounted.current) {
-      setBookingData(ProfessionalsBookings);
-    // }
+    setBookingData(ProfessionalsBookings);
   };
 
   useEffect(() => {

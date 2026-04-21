@@ -15,11 +15,10 @@ const BookingConfirmationPage = () => {
   const [userData,setUserData]= useState({})
  const [loading, setLoading] = useState(true);
 
-  const {Professionals,isAuthenticated,confirmBooking,currBooking,setCurrBooking,user,auth} = useContext(AppContext);
+  const {confirmBooking,currBooking,setCurrBooking,auth} = useContext(AppContext);
   const {findProfessional} = useContext(AdminContext);
   const navigate=useNavigate()
 
-  console.log(currBooking)
 
 //   if(!currBooking.addressInfo || !currBooking.addressInfo ){
 //     const storedBooking = sessionStorage.getItem("booking");
@@ -31,7 +30,6 @@ const BookingConfirmationPage = () => {
 // }
   
 useEffect(() => {
-    console.log("Current Booking:", currBooking);
 
     // Check if currBooking is empty (doesn't contain addressInfo or bookingObject)
     if (!currBooking?.addressInfo || !currBooking?.bookingObject) {
@@ -46,9 +44,7 @@ useEffect(() => {
 
 
 const find=async()=>{
-    console.log(currBooking?.bookingObject?.professionalId)
     const response=await findProfessional(currBooking?.bookingObject.professionalId)
-    console.log(response)
     setProfessionalData(response)
     const data=await auth()
     if(data.sucess){
@@ -65,9 +61,7 @@ const find=async()=>{
 
   const handleConfirmBooking = async() => {
     setIsLoading(true);
-    console.log(currBooking.bookingObject)
     const response=await confirmBooking({...currBooking.bookingObject,appointmentData:currBooking.addressInfo})
-    console.log(response)
     if(response.success){
        navigate("/booking-confirmed")
     }

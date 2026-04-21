@@ -25,7 +25,6 @@ const Bookings = () => {
   useEffect(() => {
     const getProfessional = async () => {
       const response = await auth();
-      console.log(response)
         setProfessional(response.user);
     };
 
@@ -34,11 +33,9 @@ const Bookings = () => {
 
   const getData = async () => {
     const response = await all_bookings();
-    console.log(response.reverse())
     const ProfessionalsBookings = response.filter(
       (booking) => booking.professionalId === professional._id
     );
-    console.log(ProfessionalsBookings)
 
       setBookings(ProfessionalsBookings);
       setLoading(false)
@@ -51,7 +48,6 @@ const Bookings = () => {
 
   const CancelBooking = async (id) => {
     const booking=bookings.find((booking)=>booking._id===id)
-    console.log(booking)
     if(booking?.isCompleted){
       toast.error("Can't Cancel Completed Bookings")
       return;
@@ -66,7 +62,6 @@ const Bookings = () => {
   };
   const MarkBookingCompleted = async (id) => {
     const booking=bookings.find((booking)=>booking._id===id)
-    console.log(booking)
     if(booking?.isCompleted){
       toast.error("Service already Completed")
       return;

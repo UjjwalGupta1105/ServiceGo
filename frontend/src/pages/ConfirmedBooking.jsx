@@ -15,8 +15,6 @@ const ConfirmedBooking=()=>{
 
       const getData=async()=>{
         const response=await getMyBookings()
-        console.log("  fvnedmjv ndsokdcjndkskdckvn cdc d YOOOOOOOOOOOOOOOOOOOO")
-        console.log(response)
         setBookings(response.reverse())
         sessionStorage.removeItem("booking");
       }

@@ -20,11 +20,8 @@ const sendEmail=async(options)=>{
        subject:options.subject,
        text:options.message
        }
-       console.log("CaMe")
      const AAA= await transporter.sendMail(emailOptions);
    //    await transporter.sendMail(emailOptions)
-   console.log(AAA)
-      console.log("Done...oiutrdi0o-oiutrdertyuiopitressertyuiopoit")
     } catch (error) {
         console.log(error)
     }

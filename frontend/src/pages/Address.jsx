@@ -1,4 +1,4 @@
-import React,{useState,useContext,useEffect} from 'react'
+import {useState,useContext,useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
 import { toast } from 'react-toastify';
 import PinDropIcon from '@mui/icons-material/PinDrop';
@@ -30,7 +30,6 @@ const Address=()=>{
         const [phone,setPhone]=useState(addressInfo?.phone)
 
         const {currBooking,setCurrBooking,auth,updateUserAddress}=useContext(AppContext)
-        console.log(currBooking)
         
         const handelShippingSubmit=async(e)=>{
            e.preventDefault()
@@ -84,7 +83,6 @@ const Address=()=>{
             const find=async()=>{ 
                 const res=await auth()
                 if(res.sucess){
-                  console.log(res.user)
                   setUserData(res.user)
                 }
               }
@@ -93,8 +91,6 @@ const Address=()=>{
         },[])
 
         useEffect(()=>{
-            console.log("SAMLIII SamLIIII.....")
-            console.log(userData?.additionalInfo)
           setAddressInfo(userData.additionalInfo)
           setAddress(userData.additionalInfo?.address)
           setCity(userData.additionalInfo?.city)

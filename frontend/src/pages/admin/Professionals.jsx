@@ -1,12 +1,9 @@
-import axios from "axios";
-import * as React from 'react';
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import Slidebar from "./Slidebar"
 import { AdminContext } from "../../context/AdminContext"
 import { useEffect,useContext,useState } from "react"
 import { useParams,useNavigate } from "react-router-dom"
-import { AppContext } from "../../context/AppContext"
 import Loader from "../../components/Loading";
 
 const AdminProfessionalPage = () => {
@@ -46,7 +43,6 @@ useEffect(()=>{
 
   const handleDelete = async (id) => {
     try {
-      console.log(id)
           await deleteProfessional(id)
           window.scrollTo(0,0)
     } catch (error) {
